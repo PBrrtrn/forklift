@@ -8,11 +8,12 @@ let vec3 = glMatrix.vec3
 let gl = null
 canvas = null
 
-let projection_matrix = mat4.create()
-
 shaders_program = null
-vertex_shader = null
-fragments_shader = null
+
+let weird_sphere = null
+
+let view_matrix = mat4.create()
+let projection_matrix = mat4.create()
 
 function run() {
   canvas = document.getElementById("my-canvas")
@@ -26,9 +27,7 @@ function run() {
   if (gl) {
     setupWebGL()
     initShaders()
-    setupObjects()
-    setupVertexShaderMatrices()
-
+    initObjects()
     tick()
   } else {
     alert("Error: Your browser does not appear to support WebGL.")
@@ -45,14 +44,19 @@ function setupWebGL() {
 
   let aspect_ratio = canvas.width/canvas.height
   mat4.perspective(projection_matrix, fov, aspect_ratio, near, far)
+
+  mat4.identity(view_matrix)
+  mat4.translate(view_matrix, view_matrix, [0.0, 0.0, -5.0])
 }
 
 function initShaders() {
   let vertex_shader_source = document.getElementById('shader-vs').innerHTML
   let fragments_shader_source = document.getElementById('shader-fs').innerHTML
 
-  vertex_shader = makeShader(vertex_shader_source, gl.VERTEX_SHADER)
-  fragments_shader = makeShader(fragments_shader_source, gl.FRAGMENT_SHADER)
+  let vertex_shader = makeShader(vertex_shader_source, gl.VERTEX_SHADER)
+  let fragments_shader = makeShader(fragments_shader_source, gl.FRAGMENT_SHADER)
+
+  shaders_program = gl.createProgram()
 
   gl.attachShader(shaders_program, vertex_shader)
   gl.attachShader(shaders_program, fragments_shader)
@@ -76,26 +80,29 @@ function makeShader(src, type) {
   return shader
 }
 
-function setupObjects() {
-  // Llamar al set_buffers de los objetos
-}
-
-function setupVertexShaderMatrices() {
-  // Llamar al set_vertex_shader de cada objeto que lo necesite
+/* Calls the constructor for every renderable object in the scene.
+ A renderable object is expected to create its own vertex, normal and
+ index buffers, populate them with appropriate data, and bind them */
+function initObjects() {
+  weird_sphere = new WeirdSphere(gl)
 }
 
 function tick() {
   requestAnimationFrame(tick)
   drawScene()
-  animate() // Escuchar eventos de teclado?
+  updateScene() // Escuchar eventos de teclado?
 }
 
+/* Calls to draw every renderable object in the scene.
+ A renderable object is expected to apply all necessary transformations,
+ set up its vertex shader matrices, use the appropriate GL Shader program,
+ bind all buffers and make a call to drawElements */
 function drawScene() {
-
+  weird_sphere.draw(gl, shaders_program, view_matrix, projection_matrix)
 }
 
-function animate() {
-  
+function updateScene() {
+  weird_sphere.rotate(0.01)
 }
 
 window.onload = run

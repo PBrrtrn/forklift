@@ -18,6 +18,7 @@
     </center>
 
     <script type="text/javascript" src="js/gl-matrix.js"></script>
+    <script type="text/javascript" src="src/WeirdSphere.js"></script>
 
     <script id="shader-vs" type="x-shader/x-vertex">
       precision highp float;
@@ -25,20 +26,20 @@
       attribute vec3 aVertexPosition;
       attribute vec3 aVertexNormal;
 
-      uniform mat4 modelMatrix;            
-      uniform mat4 viewMatrix;
-      uniform mat4 projMatrix;
+      uniform mat4 model_matrix;            
+      uniform mat4 view_matrix;
+      uniform mat4 projection_matrix;
 
-      uniform mat4 normalMatrix;
+      uniform mat4 normal_matrix;
 
       varying vec3 vNormal;    
       varying vec3 vPosWorld;  
 
       void main(void) {
-          gl_Position = projMatrix * viewMatrix * modelMatrix * vec4(aVertexPosition, 1.0);
+          gl_Position = projection_matrix * view_matrix * model_matrix * vec4(aVertexPosition, 1.0);
 
-          vPosWorld = (modelMatrix * vec4(aVertexPosition,1.0) ).xyz;    //la posicion en coordenadas de mundo
-          vNormal= (normalMatrix * vec4(aVertexNormal,1.0) ).xyz;       //la normal en coordenadas de mundo                 
+          vPosWorld = (model_matrix * vec4(aVertexPosition,1.0) ).xyz;    //la posicion en coordenadas de mundo
+          vNormal= (normal_matrix * vec4(aVertexNormal,1.0) ).xyz;       //la normal en coordenadas de mundo                 
       }
     </script>
 

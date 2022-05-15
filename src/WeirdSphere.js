@@ -83,10 +83,6 @@ class WeirdSphere {
   }
 
   getVertexNormal(u, v) {
-    var p=this.getVertexPosition(u,v);
-    var v=vec3.create();
-    vec3.normalize(v,p);
-
     var delta=0.05;
     var p1=this.getVertexPosition(u,v);
     var p2=this.getVertexPosition(u,v+delta);

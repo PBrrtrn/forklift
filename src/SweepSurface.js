@@ -1,0 +1,5 @@
+class SweepSurface {
+  constructor(curve) {
+
+  }
+}

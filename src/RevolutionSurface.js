@@ -1,0 +1,5 @@
+class RevolutionSurface {
+  constructor(curve) {
+
+  }
+}

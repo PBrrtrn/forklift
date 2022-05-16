@@ -1,0 +1,53 @@
+class ShaderProgram {
+  constructor(vertex_source, fragment_source, gl) {
+    let vertex_shader = this.makeShader(vertex_source, gl.VERTEX_SHADER)
+    let fragment_shader = this.makeShader(fragment_source, gl.FRAGMENT_SHADER)
+
+    this.program = gl.createProgram()
+
+    gl.attachShader(this.program, vertex_shader)
+    gl.attachShader(this.program, fragment_shader)
+    gl.linkProgram(this.program)
+
+    if (!gl.getProgramParameter(this.program, gl.LINK_STATUS)) {
+      alert("Unable to initialize the shader program")
+    }
+  }
+
+  use(gl, model_matrix, normal_matrix, view_matrix, projection_matrix,
+      vertex_position_buffer, vertex_normal_buffer) {
+    gl.useProgram(this.program)
+
+    let model_uniform = gl.getUniformLocation(this.program, "model_matrix")
+    let view_uniform = gl.getUniformLocation(this.program, "view_matrix")
+    let projection_uniform = gl.getUniformLocation(this.program, "projection_matrix")
+    let normal_uniform = gl.getUniformLocation(this.program, "normal_matrix")
+
+    gl.uniformMatrix4fv(model_uniform, false, model_matrix)
+    gl.uniformMatrix4fv(normal_uniform, false, normal_matrix)
+    gl.uniformMatrix4fv(view_uniform, false, view_matrix)
+    gl.uniformMatrix4fv(projection_uniform, false, projection_matrix)
+
+    let vertex_position = gl.getAttribLocation(this.program, "aVertexPosition")
+    gl.enableVertexAttribArray(vertex_position)
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_position_buffer)
+    gl.vertexAttribPointer(vertex_position, 3, gl.FLOAT, false, 0, 0)
+
+    let vertex_normal = gl.getAttribLocation(this.program, "aVertexNormal")
+    gl.enableVertexAttribArray(vertex_normal)
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_normal_buffer)
+    gl.vertexAttribPointer(vertex_normal, 3, gl.FLOAT, false, 0, 0)
+  }
+
+  makeShader(source, type) {
+    let shader = gl.createShader(type)
+    gl.shaderSource(shader, source)
+    gl.compileShader(shader)
+
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+      console.log("Error compiling shader: " + gl.getShaderInfoLog(shader));
+    }
+
+    return shader
+  }
+}

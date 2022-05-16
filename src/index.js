@@ -8,8 +8,7 @@ let vec3 = glMatrix.vec3
 let gl = null
 canvas = null
 
-shaders_program = null
-
+let shader = null
 let weird_sphere = null
 
 let view_matrix = mat4.create()
@@ -53,38 +52,14 @@ function initShaders() {
   let vertex_shader_source = document.getElementById('shader-vs').innerHTML
   let fragments_shader_source = document.getElementById('shader-fs').innerHTML
 
-  let vertex_shader = makeShader(vertex_shader_source, gl.VERTEX_SHADER)
-  let fragments_shader = makeShader(fragments_shader_source, gl.FRAGMENT_SHADER)
-
-  shaders_program = gl.createProgram()
-
-  gl.attachShader(shaders_program, vertex_shader)
-  gl.attachShader(shaders_program, fragments_shader)
-  gl.linkProgram(shaders_program)
-
-  if (!gl.getProgramParameter(shaders_program, gl.LINK_STATUS))
-    alert("Unable to initialize the shader program.")
-
-  gl.useProgram(shaders_program)
-}
-
-function makeShader(src, type) {
-  let shader = gl.createShader(type)
-  gl.shaderSource(shader, src)
-  gl.compileShader(shader)
-
-  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-    console.log("Error compiling shader: " + gl.getShaderInfoLog(shader));
-  }
-
-  return shader
+  shader = new ShaderProgram(vertex_shader_source, fragments_shader_source, gl)
 }
 
 /* Calls the constructor for every renderable object in the scene.
  A renderable object is expected to create its own vertex, normal and
  index buffers, populate them with appropriate data, and bind them */
 function initObjects() {
-  weird_sphere = new WeirdSphere(gl)
+  weird_sphere = new WeirdSphere(shader, gl)
 }
 
 function tick() {
@@ -98,7 +73,7 @@ function tick() {
  set up its vertex shader matrices, use the appropriate GL Shader program,
  bind all buffers and make a call to drawElements */
 function drawScene() {
-  weird_sphere.draw(gl, shaders_program, view_matrix, projection_matrix)
+  weird_sphere.draw(gl, view_matrix, projection_matrix)
 }
 
 function updateScene() {

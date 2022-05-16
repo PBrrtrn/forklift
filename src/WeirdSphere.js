@@ -1,5 +1,7 @@
 class WeirdSphere {
-  constructor(gl) {
+  constructor(shader, gl) {
+    this.shader = shader
+
     this.rotation_angle = 0.0
 
     this.model_matrix = mat4.create()
@@ -100,7 +102,7 @@ class WeirdSphere {
     return n;
   }
 
-  draw(gl, shader_program, view_matrix, projection_matrix) {
+  draw(gl, view_matrix, projection_matrix) {
     mat4.identity(this.model_matrix)
     mat4.rotate(this.model_matrix, this.model_matrix, 
                 this.rotation_angle, [1.0, 0.0, 1.0])
@@ -110,25 +112,8 @@ class WeirdSphere {
     mat4.invert(this.normal_matrix, this.normal_matrix)
     mat4.transpose(this.normal_matrix, this.normal_matrix)
 
-    let model_uniform = gl.getUniformLocation(shader_program, "model_matrix")
-    let view_uniform = gl.getUniformLocation(shader_program, "view_matrix")
-    let projection_uniform = gl.getUniformLocation(shader_program, "projection_matrix")
-    let normal_uniform = gl.getUniformLocation(shader_program, "normal_matrix")
-
-    gl.uniformMatrix4fv(model_uniform, false, this.model_matrix)
-    gl.uniformMatrix4fv(normal_uniform, false, this.normal_matrix)
-    gl.uniformMatrix4fv(view_uniform, false, view_matrix)
-    gl.uniformMatrix4fv(projection_uniform, false, projection_matrix)
-
-    let vertex_position = gl.getAttribLocation(shader_program, "aVertexPosition")
-    gl.enableVertexAttribArray(vertex_position)
-    gl.bindBuffer(gl.ARRAY_BUFFER, this.vertex_buffer)
-    gl.vertexAttribPointer(vertex_position, 3, gl.FLOAT, false, 0, 0)
-
-    let vertex_normal = gl.getAttribLocation(shader_program, "aVertexNormal")
-    gl.enableVertexAttribArray(vertex_normal)
-    gl.bindBuffer(gl.ARRAY_BUFFER, this.normal_buffer)
-    gl.vertexAttribPointer(vertex_normal, 3, gl.FLOAT, false, 0, 0)
+    this.shader.use(gl, this.model_matrix, this.normal_matrix, view_matrix,
+                    projection_matrix, this.vertex_buffer, this.normal_buffer)
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.index_buffer)
     gl.drawElements(gl.TRIANGLE_STRIP, 

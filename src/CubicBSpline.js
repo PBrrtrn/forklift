@@ -3,7 +3,7 @@ class CubicBSpline {
     this.control_points = control_points
   }
 
-    getPoint(u) {
+  getPoint(u) {
     let global_u = u * Math.floor(this.control_points.length/4)
 
     let segment = Math.floor(global_u)

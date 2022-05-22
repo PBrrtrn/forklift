@@ -1,9 +1,4 @@
-class QuadraticBSpline {
-  constructor(control_points) {
-    this.control_points = control_points
-    this.segments = Math.floor(this.control_points.length/3)
-  }
-
+class QuadraticBSpline extends BSpline {
   getPoint(u) {
     let segment = (u < 1) ? Math.floor(u * (this.segments + 1)) : this.segments
     let local_u = u * (this.segments + 1) - segment
@@ -24,3 +19,5 @@ class QuadraticBSpline {
   }
 
 }
+
+QuadraticBSpline.degree = 3

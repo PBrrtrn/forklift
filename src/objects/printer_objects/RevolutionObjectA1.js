@@ -34,9 +34,7 @@ class RevolutionObjectA1 extends Object3D {
 
     // Generate vertex normal array
     // SOLO DE PRUEBA, REEMPLAZAR POR LAS NORMALES DE VERDAD
-    for (let i = 0; i < vertex_position_array.length; i++) {
-      vertex_normal_array.push(vertex_position_array[i])
-    }
+    vertex_normal_array = vertex_position_array
 
     // Generate vertex index array
     let rows = curve_vertices.length

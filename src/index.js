@@ -59,7 +59,7 @@ function initShaders() {
  A renderable object is expected to create its own vertex, normal and
  index buffers, populate them with appropriate data, and bind them */
 function initObjects() {
-  weird_sphere = new WeirdSphere(shader, gl)
+  revolution_object_a1 = new RevolutionObjectA1(shader, gl)
 }
 
 function tick() {
@@ -73,11 +73,11 @@ function tick() {
  set up its vertex shader matrices, use the appropriate GL Shader program,
  bind all buffers and make a call to drawElements */
 function drawScene() {
-  weird_sphere.draw(gl, view_matrix, projection_matrix)
+  revolution_object_a1.draw(gl, view_matrix, projection_matrix)
 }
 
 function updateScene() {
-  weird_sphere.rotate(0.01)
+  revolution_object_a1.rotate(0.01)
 }
 
 window.onload = run

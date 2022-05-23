@@ -1,4 +1,4 @@
-const STEP_SIZE = 0.01
+const STEP_SIZE = 0.1
 
 class BSpline {
 

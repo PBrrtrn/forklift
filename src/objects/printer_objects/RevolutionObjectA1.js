@@ -46,7 +46,7 @@ class RevolutionObjectA1 {
 
     // Generate vertex index array
     let rows = curve_vertices.length
-    for (let i = 0; i < (rows-1); i++) {
+    for (let i = 0; i < (rows); i++) {
       vertex_index_array.push(i*columns)
 
       for (let j = 0; j < (columns-1); j++) {

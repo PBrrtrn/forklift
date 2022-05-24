@@ -61,6 +61,7 @@ function initShaders() {
 function initObjects() {
   object = new SweepObjectB2(shader, gl)
   object.rotateX(0.8)
+  object.translateY(-0.5)
 }
 
 function tick() {

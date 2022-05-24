@@ -25,6 +25,18 @@ class Object3D {
     this.z_angle = (this.z_angle + angle) % (2*Math.PI)
   }
 
+  translateX(distance) {
+    this.position[0] += distance
+  }
+
+  translateY(distance) {
+    this.position[1] += distance
+  }
+
+  translateZ(distance) {
+    this.position[2] += distance
+  }
+
   draw(gl, model_matrix, view_matrix, projection_matrix) {
     let object_model_matrix = this.createObjectModelMatrix(model_matrix)
     let normal_matrix = this.createNormalMatrix(object_model_matrix, 

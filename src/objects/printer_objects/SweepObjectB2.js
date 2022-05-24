@@ -1,34 +1,34 @@
-const rows = 16
+const rows = 4
 
 class SweepObjectB2 extends Object3D {
 
   generateVertexBuffers() {
     let s = new QuadraticBSpline(0.01, [
-      [0.63, 0.77, 0.0],
-      [0.63, 0.77, 0.0],
-      [0.63, 0.77, 0.0],
-      [0.05, 0.35, 0.0], // Puntos medios
-      [-0.2, 0.98, 0.0],
-      [-0.2, 0.98, 0.0],
-      [-0.25, 0.3, 0.0], // Puntos medios
-      [-0.9, 0.45, 0.0],
-      [-0.9, 0.45, 0.0],
+      [0.63, 0.0, 0.77],
+      [0.63, 0.0, 0.77],
+      [0.63, 0.0, 0.77],
+      [0.05, 0.0, 0.35], // Puntos medios
+      [-0.2, 0.0, 0.98],
+      [-0.2, 0.0, 0.98],
+      [-0.25, 0.0, 0.3], // Puntos medios
+      [-0.9, 0.0, 0.45],
+      [-0.9, 0.0, 0.45],
       [-0.35, 0.0, 0.0], // Puntos medios
-      [-0.9, -0.4, 0.0],
-      [-0.9, -0.4, 0.0],
-      [-0.25, -0.25, 0.0], // Puntos medios
-      [-0.26, -0.97, 0.0],
-      [-0.26, -0.97, 0.0],
-      [0.0, -0.3, 0.0], // Puntos medios
-      [0.59, -0.81, 0.0],
-      [0.59, -0.81, 0.0],
-      [0.25, -0.1, 0.0], // Puntos medios
+      [-0.9, 0.0, -0.4],
+      [-0.9, 0.0, -0.4],
+      [-0.25, 0.0, -0.25], // Puntos medios
+      [-0.26, 0.0, -0.97],
+      [-0.26, 0.0, -0.97],
+      [0.0, 0.0, -0.3], // Puntos medios
+      [0.59, 0.0, -0.81],
+      [0.59, 0.0, -0.81],
+      [0.25, 0.0, -0.1], // Puntos medios
       [1.0, 0.0, 0.0],
       [1.0, 0.0, 0.0],
-      [0.25, 0.2, 0.0], // Puntos medios
-      [0.63, 0.77, 0.0],
-      [0.63, 0.77, 0.0],
-      [0.63, 0.77, 0.0]
+      [0.25, 0.0, 0.2], // Puntos medios
+      [0.63, 0.0, 0.77],
+      [0.63, 0.0, 0.77],
+      [0.63, 0.0, 0.77]
     ])
 
     let curve = new Curve([s])
@@ -89,7 +89,7 @@ class SweepObjectB2 extends Object3D {
     let vertex_slice = []
     for (let i = 0; i < curve_vertices.length; i++) {
       let x = curve_vertices[i][0]
-      let y = u
+      let y = u*2
       let z = curve_vertices[i][2]
 
       vertex_slice.push(x, y, z)

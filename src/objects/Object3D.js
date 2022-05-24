@@ -1,43 +1,32 @@
 class Object3D {
-  constructor(shader, gl) {
+  constructor(shader, gl, surface) {
     this.shader = shader
 
-    this.position = [0.0, 0.0, 0.0]
+    let vertex_position_array = surface.getVertexPositions()
+    let vertex_normal_array = surface.getVertexNormals()
+    let vertex_index_array = surface.getVertexIndices()
 
-    this.x_angle = 0.0
-    this.y_angle = 0.0
-    this.z_angle = 0.0
+    this.vertex_buffer = gl.createBuffer()
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.vertex_buffer)
+    gl.bufferData(gl.ARRAY_BUFFER, 
+                  new Float32Array(vertex_position_array),
+                  gl.STATIC_DRAW)
 
-    this.scale = [1.0, 1.0, 1.0]
+    this.normal_buffer = gl.createBuffer()
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.normal_buffer)
+    gl.bufferData(gl.ARRAY_BUFFER,
+                  new Float32Array(vertex_normal_array),
+                  gl.STATIC_DRAW)
 
-    this.generateVertexBuffers()
+    this.index_buffer = gl.createBuffer()
+    this.index_buffer.number_vertex_point = vertex_index_array.length
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.index_buffer)
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, 
+                  new Uint16Array(vertex_index_array),
+                  gl.STATIC_DRAW)
   }
 
-  rotateX(angle) {
-    this.x_angle = (this.x_angle + angle) % (2*Math.PI)
-  }
-
-  rotateY(angle) {
-    this.y_angle = (this.y_angle + angle) % (2*Math.PI)
-  }
-
-  rotateZ(angle) {
-    this.z_angle = (this.z_angle + angle) % (2*Math.PI)
-  }
-
-  translateX(distance) {
-    this.position[0] += distance
-  }
-
-  translateY(distance) {
-    this.position[1] += distance
-  }
-
-  translateZ(distance) {
-    this.position[2] += distance
-  }
-
-  draw(gl, model_matrix, view_matrix, projection_matrix) {
+  draw(position, angle, scale, gl, model_matrix, view_matrix, projection_matrix) {
     let object_model_matrix = this.createObjectModelMatrix(model_matrix)
     let normal_matrix = this.createNormalMatrix(object_model_matrix, 
                                                 view_matrix)

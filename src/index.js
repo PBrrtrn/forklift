@@ -59,7 +59,7 @@ function initShaders() {
  A renderable object is expected to create its own vertex, normal and
  index buffers, populate them with appropriate data, and bind them */
 function initObjects() {
-  object = new SweepObjectB2(shader, gl)
+  sweep_b2 = new SweepB2(4, 100, shader, gl)
   object.rotateX(0.8)
   object.translateY(-0.5)
 }
@@ -76,11 +76,11 @@ function tick() {
  bind all buffers and make a call to drawElements */
 function drawScene() {
   let m = mat4.create()
-  object.draw(gl, m, view_matrix, projection_matrix)
+  sweep_b2.draw(gl, m, view_matrix, projection_matrix)
 }
 
 function updateScene() {
-  object.rotateY(0.01)
+  sweep_b2.rotateY(0.01)
 }
 
 window.onload = run

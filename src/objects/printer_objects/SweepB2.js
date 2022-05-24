@@ -1,7 +1,79 @@
-// TODO: Esta clase debería extender SweepObject
+class SweepB2 {
+  constructor(n_rows, n_columns, shader, gl) { // Construir con 100 columnas
+    this.position = [0.0, 0.0, 0.0]
+    this.angle = [0.0, 0.0, 0.0]
+    this.scale = [1.0, 1.0, 1.0]
 
+    let curve = this.buildCurve(n_columns)
+    let surface = new SweepSurface(curve, n_rows)
+    this.object = new Object3D(shader, gl, surface)
+  }
+
+  draw(gl, model_matrix, view_matrix, projection_matrix) {
+    this.object.draw(this.position, this.angle, this.scale, gl, 
+                     model_matrix, view_matrix, projection_matrix)
+  }
+
+  rotateX(angle) {
+    this.angle[0] = (this.angle[0] + angle) % (2*Math.PI)
+  }
+
+  rotateY(angle) {
+    this.angle[1] = (this.angle[1] + angle) % (2*Math.PI)
+  }
+
+  rotateZ(angle) {
+    this.angle[2] = (this.angle[2] + angle) % (2*Math.PI)
+  }
+
+  translateX(distance) {
+    this.position[0] += distance
+  }
+
+  translateY(distance) {
+    this.position[1] += distance
+  }
+
+  translateZ(distance) {
+    this.position[2] += distance
+  }
+
+  buildCurve(n_columns) {
+    let step_size = 1/n_columns
+    let s = new QuadraticBSpline(step_size, [
+      [0.63, 0.0, 0.77],
+      [0.63, 0.0, 0.77],
+      [0.63, 0.0, 0.77],
+      [0.05, 0.0, 0.35], // Puntos medios
+      [-0.2, 0.0, 0.98],
+      [-0.2, 0.0, 0.98],
+      [-0.25, 0.0, 0.3], // Puntos medios
+      [-0.9, 0.0, 0.45],
+      [-0.9, 0.0, 0.45],
+      [-0.35, 0.0, 0.0], // Puntos medios
+      [-0.9, 0.0, -0.4],
+      [-0.9, 0.0, -0.4],
+      [-0.25, 0.0, -0.25], // Puntos medios
+      [-0.26, 0.0, -0.97],
+      [-0.26, 0.0, -0.97],
+      [0.0, 0.0, -0.3], // Puntos medios
+      [0.59, 0.0, -0.81],
+      [0.59, 0.0, -0.81],
+      [0.25, 0.0, -0.1], // Puntos medios
+      [1.0, 0.0, 0.0],
+      [1.0, 0.0, 0.0],
+      [0.25, 0.0, 0.2], // Puntos medios
+      [0.63, 0.0, 0.77],
+      [0.63, 0.0, 0.77],
+      [0.63, 0.0, 0.77]
+    ])
+
+    return new Curve([s])
+  }
+}
+
+/*
 const rows = 4
-
 class SweepObjectB2 extends Object3D {
 
   generateVertexBuffers() {
@@ -100,3 +172,4 @@ class SweepObjectB2 extends Object3D {
     return vertex_slice
   }
 }
+*/

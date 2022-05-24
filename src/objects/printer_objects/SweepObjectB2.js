@@ -1,3 +1,5 @@
+// TODO: Esta clase debería extender SweepObject
+
 const rows = 4
 
 class SweepObjectB2 extends Object3D {

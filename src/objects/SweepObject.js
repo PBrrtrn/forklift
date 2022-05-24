@@ -1,3 +1,6 @@
+// TODO: Esto no debería extender Object3D; debería ser un colaborador.
+// Quizás deba extender de una clase Shape3D común que represente una
+// forma de construir la geometría de un Object3D.
 class SweepObject extends Object3D {
 
   constructor(shader, gl, n_rows) {
@@ -71,7 +74,4 @@ class SweepObject extends Object3D {
     return vertex_slice
   }
 
-  getCurve() {
-    throw 'Must implement'
-  }
 }

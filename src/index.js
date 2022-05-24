@@ -60,6 +60,7 @@ function initShaders() {
  index buffers, populate them with appropriate data, and bind them */
 function initObjects() {
   object = new SweepObjectB2(shader, gl)
+  object.rotateX(0.8)
 }
 
 function tick() {
@@ -73,11 +74,12 @@ function tick() {
  set up its vertex shader matrices, use the appropriate GL Shader program,
  bind all buffers and make a call to drawElements */
 function drawScene() {
-  object.draw(gl, view_matrix, projection_matrix)
+  let m = mat4.create()
+  object.draw(gl, m, view_matrix, projection_matrix)
 }
 
 function updateScene() {
-  object.rotate(0.01)
+  object.rotateY(0.01)
 }
 
 window.onload = run

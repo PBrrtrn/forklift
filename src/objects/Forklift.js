@@ -1,12 +1,19 @@
 class Forklift {
-  constructor() {
+  constructor(gl, shader) {
     this.position_x = 0.0
-    this.position_y = 0.0
     this.position_z = 0.0
 
-    this.angle = 0.0
+    this.rotation = 0.0
 
     this.lift_elevation = 0.0
+
+    this.wheel1 = new Wheel(gl, shader)
+    this.wheel2 = new Wheel(gl, shader)
+    this.wheel3 = new Wheel(gl, shader)
+    this.wheel4 = new Wheel(gl, shader)
+
+    // this.chassis = new Chassis(gl)
+    // this.lift = new Lift(gl)
   }
 
   draw() {
@@ -22,11 +29,11 @@ class Forklift {
   }
 
   turnRight() {
-    this.angle += 0.1
+    this.rotation += 0.1
   }
 
   turnLeft() {
-    this.angle -= 0.1
+    this.rotation -= 0.1
   }
 
   raise() {
@@ -39,7 +46,7 @@ class Forklift {
       this.lift_elevation -= 0.1
   }
 
-  grabObject() {
+  grabObject(object) {
     // Implement
   }
 

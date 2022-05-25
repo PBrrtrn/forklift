@@ -7,6 +7,13 @@ class SweepB2 extends Object3D {
                            view_matrix, projection_matrix)
   }
 
+  initialize3dComponents(n_rows, n_columns, shader, gl) {
+    let curve = this.buildCurve(n_columns)
+    let surface = new SweepSurface(curve, n_rows)
+
+    this.renderable = new Renderable3D(shader, gl, surface)
+  }
+
   modelMatrix(parent_model_matrix) {
     let model_matrix = mat4.clone(parent_model_matrix)
 
@@ -30,13 +37,6 @@ class SweepB2 extends Object3D {
     mat4.transpose(normal_matrix, normal_matrix)
 
     return normal_matrix
-  }
-
-  initialize3dComponents(n_rows, n_columns, shader, gl) {
-    let curve = this.buildCurve(n_rows)
-    let surface = new SweepSurface(curve, n_rows)
-
-    this.renderable = new Renderable3D(shader, gl, surface)
   }
 
   buildCurve(n_columns) {

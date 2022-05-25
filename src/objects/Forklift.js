@@ -1,54 +1,36 @@
-class Forklift {
-  constructor(gl, shader) {
-    this.position_x = 0.0
-    this.position_z = 0.0
-
-    this.rotation = 0.0
-
-    this.lift_elevation = 0.0
-
-    this.wheel1 = new Wheel(gl, shader)
-    this.wheel2 = new Wheel(gl, shader)
-    this.wheel3 = new Wheel(gl, shader)
-    this.wheel4 = new Wheel(gl, shader)
-
-    // this.chassis = new Chassis(gl)
-    // this.lift = new Lift(gl)
+class Forklift extends object3D {
+  draw(gl, parent_model_matrix, view_matrix, projection_matrix) {
+    // TODO: Implement
   }
 
-  draw() {
-    // Implementar
+  moveForward(distance) {
+    // TODO: Implement
   }
 
-  moveForward() {
-    this.position_x += 0.1
-  }
-
-  moveBack() {
-    this.position_x -= 0.1
-  }
-
-  turnRight() {
-    this.rotation += 0.1
-  }
-
-  turnLeft() {
-    this.rotation -= 0.1
-  }
-
-  raise() {
-    if (this.lift_elevation < 1.0)
-      this.lift_elevation += 0.1
-  }
-
-  lower() {
-    if (this.lift_elevation > 0.0)
-      this.lift_elevation -= 0.1
+  moveBackwards(distance) {
+    // TODO: Implement
   }
 
   grabObject(object) {
-    // Implement
+    // TODO: Implement
   }
 
+  raise() {
+    // TODO: Implement
+  }
 
+  lower() {
+    // TODO: Implement
+  }
+
+  initialize3dComponents(n_rows, n_columns, shader, gl) {
+    this.wheel1 = new Wheel(n_rows, n_columns, shader, gl)
+    this.wheel2 = new Wheel(n_rows, n_columns, shader, gl)
+    this.wheel3 = new Wheel(n_rows, n_columns, shader, gl)
+    this.wheel4 = new Wheel(n_rows, n_columns, shader, gl)
+
+    this.chassis = new Chassis(n_rows, n_columns, shader, gl)
+
+    this.lift = new Lift(n_rows, n_columns, shader, gl)
+  }
 }

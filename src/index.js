@@ -59,7 +59,7 @@ function initShaders() {
  A renderable object is expected to create its own vertex, normal and
  index buffers, populate them with appropriate data, and bind them */
 function initObjects() {
-  sweep_b2 = new SweepB2(100, 4, shader, gl)
+  sweep_b2 = new SweepB2(2, 100, shader, gl)
   sweep_b2.rotateX(0.8)
   sweep_b2.translateY(-0.5)
 }

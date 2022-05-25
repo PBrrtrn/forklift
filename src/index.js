@@ -9,7 +9,7 @@ let gl = null
 canvas = null
 
 let shader = null
-let weird_sphere = null
+let sweep_b2 = null
 
 let view_matrix = mat4.create()
 let projection_matrix = mat4.create()
@@ -60,8 +60,8 @@ function initShaders() {
  index buffers, populate them with appropriate data, and bind them */
 function initObjects() {
   sweep_b2 = new SweepB2(4, 100, shader, gl)
-  object.rotateX(0.8)
-  object.translateY(-0.5)
+  sweep_b2.rotateX(0.8)
+  sweep_b2.translateY(-0.5)
 }
 
 function tick() {

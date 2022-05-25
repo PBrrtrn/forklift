@@ -1,13 +1,9 @@
-// TODO: Esto no debería extender Object3D; debería ser un colaborador.
-// Quizás deba extender de una clase Shape3D común que represente una
-// forma de construir la geometría de un Object3D.
-
 class SweepSurface {
   constructor(curve, n_rows) {
     let curve_vertices = curve.getVertices()
 
     this.vertex_positions = this.buildVertexPositionArray(curve_vertices, n_rows)
-    this.vertex_normals = this.buildVertexNormals(vertex_positions) // SOLO DE PRUEBA, REEMPLAZAR CON LAS NORMALES REALES
+    this.vertex_normals = this.buildVertexNormals(this.vertex_positions) // SOLO DE PRUEBA, REEMPLAZAR CON LAS NORMALES REALES
     this.vertex_indices = this.buildVertexIndexArray(curve_vertices, n_rows)
   }
 
@@ -23,11 +19,11 @@ class SweepSurface {
     return this.vertex_indices
   }
 
-  buildVertexPositionArray(curve_vertices) {
+  buildVertexPositionArray(curve_vertices, n_rows) {
     let vertex_positions = []
 
-    for (let i = 0; i <= this.n_rows; i++) {
-      let u = i/this.n_rows
+    for (let i = 0; i <= n_rows; i++) {
+      let u = i/n_rows
       let vertex_slice = this.getVertexSlice(u, curve_vertices)
       vertex_positions.push.apply(vertex_positions, vertex_slice)
     }
@@ -39,20 +35,20 @@ class SweepSurface {
     return vertex_positions
   }
 
-  vertexIndexArray(curve_vertices, n_rows) {
+  buildVertexIndexArray(curve_vertices, n_rows) {
     let vertex_indices = []
 
     let n_columns = curve_vertices.length
     for (let i = 0; i < n_rows; i++) {
-      vertex_index_array.push(i*n_columns)
+      vertex_indices.push(i*n_columns)
 
       for (let j = 0; j < (n_columns-1); j++) {
-        vertex_index_array.push(i*n_columns+j);
-        vertex_index_array.push((i+1)*n_columns+j);
-        vertex_index_array.push(i*n_columns+j+1);
-        vertex_index_array.push((i+1)*n_columns+j+1);
+        vertex_indices.push(i*n_columns+j);
+        vertex_indices.push((i+1)*n_columns+j);
+        vertex_indices.push(i*n_columns+j+1);
+        vertex_indices.push((i+1)*n_columns+j+1);
       }
-      vertex_index_array.push((i+1) * n_columns + n_columns - 1);
+      vertex_indices.push((i+1) * n_columns + n_columns - 1);
     }
 
     return vertex_indices

@@ -9,7 +9,7 @@ let gl = null
 canvas = null
 
 let shader = null
-let weird_sphere = null
+let sweep_b2 = null
 
 let view_matrix = mat4.create()
 let projection_matrix = mat4.create()
@@ -59,7 +59,9 @@ function initShaders() {
  A renderable object is expected to create its own vertex, normal and
  index buffers, populate them with appropriate data, and bind them */
 function initObjects() {
-  object = new SweepObjectB2(shader, gl)
+  sweep_b2 = new SweepB2(100, 4, shader, gl)
+  sweep_b2.rotateX(0.8)
+  sweep_b2.translateY(-0.5)
 }
 
 function tick() {
@@ -73,11 +75,12 @@ function tick() {
  set up its vertex shader matrices, use the appropriate GL Shader program,
  bind all buffers and make a call to drawElements */
 function drawScene() {
-  object.draw(gl, view_matrix, projection_matrix)
+  let m = mat4.create()
+  sweep_b2.draw(gl, m, view_matrix, projection_matrix)
 }
 
 function updateScene() {
-  object.rotate(0.01)
+  sweep_b2.rotateY(0.01)
 }
 
 window.onload = run

@@ -1,35 +1,41 @@
 class Object3D {
-  constructor(shader, gl) {
-    this.shader = shader
+  constructor(n_rows, n_columns, shader, gl) {
+    this.position = [0.0, 0.0, 0.0]
+    this.angle = [0.0, 0.0, 0.0]
+    this.scale = [1.0, 1.0, 1.0]
 
-    this.rotation_angle = 0.0
-
-    this.model_matrix = mat4.create()
-    this.normal_matrix = mat4.create()
-
-    this.generateVertexBuffers()
+    this.initialize3dComponents(n_rows, n_columns, shader, gl)
   }
 
-  draw(gl, view_matrix, projection_matrix) {
-    mat4.identity(this.model_matrix)
-    mat4.rotate(this.model_matrix, this.model_matrix, 
-                this.rotation_angle, [1.0, 0.0, 1.0])
-
-    mat4.identity(this.normal_matrix)
-    mat4.multiply(this.normal_matrix, view_matrix, this.model_matrix)
-    mat4.invert(this.normal_matrix, this.normal_matrix)
-    mat4.transpose(this.normal_matrix, this.normal_matrix)
-
-    this.shader.use(gl, this.model_matrix, this.normal_matrix, view_matrix,
-                    projection_matrix, this.vertex_buffer, this.normal_buffer)
-
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.index_buffer)
-    gl.drawElements(gl.TRIANGLE_STRIP, 
-                    this.index_buffer.number_vertex_point,
-                    gl.UNSIGNED_SHORT, 0)
+  render(gl, model_matrix, view_matrix, projection_matrix) {
+    throw "Must implement in derived classes"
   }
 
-  rotate(angle) {
-    this.rotation_angle += angle
+  rotateX(angle) {
+    this.angle[0] = (this.angle[0] + angle) % (2*Math.PI)
+  }
+
+  rotateY(angle) {
+    this.angle[1] = (this.angle[1] + angle) % (2*Math.PI)
+  }
+
+  rotateZ(angle) {
+    this.angle[2] = (this.angle[2] + angle) % (2*Math.PI)
+  }
+
+  translateX(distance) {
+    this.position[0] += distance
+  }
+
+  translateY(distance) {
+    this.position[1] += distance
+  }
+
+  translateZ(distance) {
+    this.position[2] += distance
+  }
+
+  initialize3dComponents(n_rows, n_columns, shader, gl) {
+    throw "Must implement in derived classes"
   }
 }

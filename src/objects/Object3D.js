@@ -4,11 +4,10 @@ class Object3D {
     this.angle = [0.0, 0.0, 0.0]
     this.scale = [1.0, 1.0, 1.0]
 
-    let surface = this.buildSurface(n_rows, n_columns)
-    this.renderable = new Renderable3D(shader, gl, surface)
+    this.initialize3dComponents(n_rows, n_columns, shader, gl)
   }
 
-  draw(gl, model_matrix, view_matrix, projection_matrix) {
+  render(gl, model_matrix, view_matrix, projection_matrix) {
     throw "Must implement in derived classes"
   }
 
@@ -36,7 +35,7 @@ class Object3D {
     this.position[2] += distance
   }
 
-  buildSurface(n_rows, n_columns) {
+  initialize3dComponents(n_rows, n_columns, shader, gl) {
     throw "Must implement in derived classes"
   }
 }

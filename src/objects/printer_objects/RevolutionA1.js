@@ -40,8 +40,9 @@ class RevolutionA1 extends Object3D {
   }
 
   buildCurve(n_rows) {
+    let step_size = 1 / (n_rows - 6)
     let s1 = new StraightLine([[0.0, 0.9, 0.0], [-0.9, 0.9, 0.0], [-0.9, 0.6, 0.0]])
-    let s2 = new QuadraticBSpline(0.1, [
+    let s2 = new QuadraticBSpline(step_size, [
       [-0.9, 0.6, 0.0],
       [-0.9, 0.6, 0.0],
       [-0.9, 0.6, 0.0],

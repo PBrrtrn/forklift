@@ -9,6 +9,7 @@ let gl = null
 canvas = null
 
 let shader = null
+let revolution_a1 = null
 let sweep_b2 = null
 
 let view_matrix = mat4.create()
@@ -60,8 +61,12 @@ function initShaders() {
  index buffers, populate them with appropriate data, and bind them */
 function initObjects() {
   sweep_b2 = new SweepB2(2, 100, shader, gl)
+  sweep_b2.translateX(-1)
   sweep_b2.rotateX(0.8)
   sweep_b2.translateY(-0.5)
+
+  revolution_a1 = new RevolutionA1(0, 16, shader, gl)
+  revolution_a1.translateX(1)
 }
 
 function tick() {
@@ -77,10 +82,13 @@ function tick() {
 function drawScene() {
   let m = mat4.create()
   sweep_b2.draw(gl, m, view_matrix, projection_matrix)
+  revolution_a1.draw(gl, m, view_matrix, projection_matrix)
 }
 
 function updateScene() {
   sweep_b2.rotateY(0.01)
+  revolution_a1.rotateY(0.01)
+  revolution_a1.rotateZ(0.01)
 }
 
 window.onload = run

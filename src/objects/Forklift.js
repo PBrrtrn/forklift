@@ -1,4 +1,4 @@
-class Forklift extends object3D {
+class Forklift extends Object3D {
   draw(gl, parent_model_matrix, view_matrix, projection_matrix) {
     // TODO: Implement
   }

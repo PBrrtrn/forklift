@@ -47,22 +47,6 @@ class RevolutionSurface {
     return vertex_indices
   }
 
-  /*
-  buildVertexIndices(curve_vertices, n_slices) {
-    let vertex_indices = []
-    let n_vertices_per_slice = curve_vertices.length
-    for (let i = 0; i < (n_vertices_per_slice); i++) {
-      for (let j = 0; j < (n_slices-1); j++) {
-        vertex_indices.push(i*n_slices+j);
-        vertex_indices.push(i*n_slices+j+1);
-        vertex_indices.push((i+1)*n_slices+j);
-        vertex_indices.push((i+1)*n_slices+j+1);
-      }
-    }
-    return vertex_indices
-  }
-  */
-
   buildVertexNormals() {
     return this.vertex_positions // SOLO DE PRUEBA, REEMPLAZAR CON LAS NORMALES REALES
   }

@@ -35,6 +35,31 @@ class Object3D {
     this.position[2] += distance
   }
 
+  modelMatrix(parent_model_matrix) {
+    let model_matrix = mat4.clone(parent_model_matrix)
+
+    mat4.translate(model_matrix, model_matrix, this.position)
+
+    mat4.rotateX(model_matrix, model_matrix, this.angle[0])
+    mat4.rotateY(model_matrix, model_matrix, this.angle[1])
+    mat4.rotateZ(model_matrix, model_matrix, this.angle[2])
+
+    mat4.scale(model_matrix, model_matrix, this.scale)
+
+    return model_matrix
+  }
+
+  normalMatrix(model_matrix, view_matrix) {
+    let normal_matrix = mat4.create()
+
+    mat4.identity(normal_matrix)
+    mat4.multiply(normal_matrix, view_matrix, model_matrix)
+    mat4.invert(normal_matrix, normal_matrix)
+    mat4.transpose(normal_matrix, normal_matrix)
+
+    return normal_matrix
+  }
+
   initialize3dComponents(n_rows, n_columns, shader, gl) {
     throw "Must implement in derived classes"
   }

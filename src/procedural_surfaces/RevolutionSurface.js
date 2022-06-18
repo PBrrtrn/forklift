@@ -1,10 +1,10 @@
 class RevolutionSurface {
-  constructor(curve, n_columns) {
+  constructor(curve, n_slices) {
     let curve_vertices = curve.getVertices()
 
-    this.vertex_positions = this.buildVertexPositions(curve_vertices, n_columns)
-    this.vertex_normals = this.buildVertexNormals(this.vertex_positions)
-    this.vertex_indices = this.buildVertexIndices(curve_vertices, n_columns)
+    this.vertex_positions = this.buildVertexPositions(curve_vertices, n_slices)
+    this.vertex_indices = this.buildVertexIndices(curve_vertices, n_slices)
+    this.vertex_normals = this.buildVertexNormals()
   }
 
   getVertexPositions() {
@@ -19,11 +19,11 @@ class RevolutionSurface {
     return this.vertex_indices
   }
 
-  buildVertexPositions(curve_vertices, n_columns) {
+  buildVertexPositions(curve_vertices, n_slices) {
     let vertex_positions = []
 
-    for (let i = 0; i <= n_columns; i++) {
-      let phi = (i/n_columns) * 2 * Math.PI
+    for (let i = 0; i <= n_slices; i++) {
+      let phi = (i/n_slices) * 2 * Math.PI
       let vertex_slice = this.getVertexSlice(phi, curve_vertices)
 
       vertex_positions.push.apply(vertex_positions, vertex_slice)
@@ -32,25 +32,39 @@ class RevolutionSurface {
     return vertex_positions
   }
 
-  buildVertexNormals(vertex_positions, curve_vertices) {
-    return vertex_positions // SOLO DE PRUEBA, REEMPLAZAR CON LAS NORMALES REALES
+  buildVertexIndices(curve_vertices, n_slices) {
+    let n_vertices_per_slice = curve_vertices.length
+
+    let vertex_indices = []
+    for (let i = 0; i < n_vertices_per_slice - 1; i++) {
+      for (let j = 0; j < n_slices; j++) {
+        vertex_indices.push(i + j * n_vertices_per_slice)
+        vertex_indices.push(i + j * n_vertices_per_slice + 1)
+      }
+      vertex_indices.push(i)
+    }
+
+    return vertex_indices
   }
 
-  buildVertexIndices(curve_vertices, n_columns) {
+  /*
+  buildVertexIndices(curve_vertices, n_slices) {
     let vertex_indices = []
-    let n_rows = curve_vertices.length
-    for (let i = 0; i < (n_rows); i++) {
-      vertex_indices.push(i*n_columns)
-
-      for (let j = 0; j < (n_columns-1); j++) {
-        vertex_indices.push(i*n_columns+j);
-        vertex_indices.push((i+1)*n_columns+j);
-        vertex_indices.push(i*n_columns+j+1);
-        vertex_indices.push((i+1)*n_columns+j+1);
+    let n_vertices_per_slice = curve_vertices.length
+    for (let i = 0; i < (n_vertices_per_slice); i++) {
+      for (let j = 0; j < (n_slices-1); j++) {
+        vertex_indices.push(i*n_slices+j);
+        vertex_indices.push(i*n_slices+j+1);
+        vertex_indices.push((i+1)*n_slices+j);
+        vertex_indices.push((i+1)*n_slices+j+1);
       }
-      vertex_indices.push((i+1) * n_columns + n_columns - 1);
     }
     return vertex_indices
+  }
+  */
+
+  buildVertexNormals() {
+    return this.vertex_positions // SOLO DE PRUEBA, REEMPLAZAR CON LAS NORMALES REALES
   }
 
   getVertexSlice(phi, curve_vertices) {

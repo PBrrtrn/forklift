@@ -41,8 +41,11 @@ class RevolutionA1 extends Object3D {
 
   buildCurve(n_rows) {
     let step_size = 1 / (n_rows - 6)
-    let s1 = new StraightLine([[0.0, 0.9, 0.0], [-0.9, 0.9, 0.0], [-0.9, 0.6, 0.0]])
-    let s2 = new QuadraticBSpline(step_size, [
+    // let s1 = new StraightLineXY([[0.0, 0.9, 0.0], [-0.9, 0.9, 0.0], [-0.9, 0.6, 0.0]])
+
+    let s1 = new StraightLineXY([0.0, 0.9, 0.0], [-0.9, 0.9, 0.0])
+    let s2 = new StraightLineXY([-0.9, 0.9, 0.0], [-0.9, 0.6, 0.0])
+    let s3 = new QuadraticBSpline(step_size, [
       [-0.9, 0.6, 0.0],
       [-0.9, 0.6, 0.0],
       [-0.9, 0.6, 0.0],
@@ -53,8 +56,9 @@ class RevolutionA1 extends Object3D {
       [-0.9, -0.6, 0.0],
       [-0.9, -0.6, 0.0]
     ])
-    let s3 = new StraightLine([[-0.9, -0.6, 0.0], [-0.9, -0.9, 0.0], [0.0, -0.9, 0.0]])
+    let s4 = new StraightLineXY([-0.9, -0.6, 0.0], [-0.9, -0.9, 0.0])
+    let s5 = new StraightLineXY([-0.9, -0.9, 0.0], [0.0, -0.9, 0.0])
 
-    return new Curve([s1, s2, s3])
+    return new Curve([s1, s2, s3, s4, s5])
   }
 }

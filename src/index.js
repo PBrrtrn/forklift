@@ -9,8 +9,6 @@ let gl = null
 canvas = null
 
 let shader = null
-// let revolution_a1 = null
-// let sweep_b2 = null
 let forklift = null
 
 let view_matrix = mat4.create()

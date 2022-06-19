@@ -1,10 +1,12 @@
 class RevolutionSurface {
   constructor(curve, n_slices) {
     let curve_vertices = curve.getVertices()
+    let vertices = this.buildVertices(curve_vertices, n_slices)
 
-    this.vertex_positions = this.buildVertexPositions(curve_vertices, n_slices)
+    this.vertex_positions = vertices.map((v) => v.position).flat()
+    this.vertex_normals = vertices.map((v) => v.normal).flat()
+
     this.vertex_indices = this.buildVertexIndices(curve_vertices, n_slices)
-    this.vertex_normals = this.buildVertexNormals()
   }
 
   getVertexPositions() {
@@ -19,17 +21,17 @@ class RevolutionSurface {
     return this.vertex_indices
   }
 
-  buildVertexPositions(curve_vertices, n_slices) {
-    let vertex_positions = []
+  buildVertices(curve_vertices, n_slices) {
+    let vertices = []
 
     for (let i = 0; i <= n_slices; i++) {
       let phi = (i/n_slices) * 2 * Math.PI
       let vertex_slice = this.getVertexSlice(phi, curve_vertices)
 
-      vertex_positions.push.apply(vertex_positions, vertex_slice)
+      vertices.push.apply(vertices, vertex_slice)
     }
 
-    return vertex_positions
+    return vertices
   }
 
   buildVertexIndices(curve_vertices, n_slices) {
@@ -54,11 +56,23 @@ class RevolutionSurface {
   getVertexSlice(phi, curve_vertices) {
     let vertex_slice = []
     for (let i = 0; i < curve_vertices.length; i++) {
-      let x = curve_vertices[i][0]*Math.cos(phi)
-      let y = curve_vertices[i][1]
-      let z = curve_vertices[i][0]*Math.sin(phi)
+      // Hacer lo mismo para las normales
+      let curve_vertex = curve_vertices[i]
 
-      vertex_slice.push(x, y, z)
+      let pos_x = curve_vertex.position[0]*Math.cos(phi)
+      let pos_y = curve_vertex.position[1]
+      let pos_z = curve_vertex.position[0]*Math.sin(phi)
+
+      let normal_x = curve_vertex.normal[0]*Math.cos(phi)
+      let normal_y = curve_vertex.normal[1]
+      let normal_z = curve_vertex.normal[0]*Math.sin(phi)
+
+      let vertex = {
+        position: [pos_x, pos_y, pos_z],
+        normal: [normal_x, normal_y, normal_z]
+      }
+
+      vertex_slice.push(vertex)
     }
 
     return vertex_slice

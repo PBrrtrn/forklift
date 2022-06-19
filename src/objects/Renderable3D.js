@@ -6,6 +6,8 @@ class Renderable3D {
     let vertex_normal_array = surface.getVertexNormals()
     let vertex_index_array = surface.getVertexIndices()
 
+    debugger
+
     this.vertex_buffer = gl.createBuffer()
     gl.bindBuffer(gl.ARRAY_BUFFER, this.vertex_buffer)
     gl.bufferData(gl.ARRAY_BUFFER, 

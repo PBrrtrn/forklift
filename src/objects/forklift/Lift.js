@@ -8,6 +8,7 @@ class Lift extends Object3D {
     this.horizontal_beam_1.draw(gl, model_matrix, view_matrix, projection_matrix)
     this.horizontal_beam_2.draw(gl, model_matrix, view_matrix, projection_matrix)
     this.horizontal_beam_3.draw(gl, model_matrix, view_matrix, projection_matrix)
+    this.platform.draw(gl, model_matrix, view_matrix, projection_matrix)
   }
 
   initialize3dComponents(n_rows, n_columns, shader, gl) {
@@ -45,5 +46,12 @@ class Lift extends Object3D {
     this.horizontal_beam_3.scaleY(0.05)
     this.horizontal_beam_3.scaleX(0.03)
     this.horizontal_beam_3.scaleZ(0.3)
+
+    this.platform = new Cuboid(12, 12, shader, gl)
+    this.platform.translateY(0.3)
+    this.platform.translateX(1.45)
+    this.platform.scaleY(0.02)
+    this.platform.scaleX(0.5)
+    this.platform.scaleZ(0.5)
   }
 }

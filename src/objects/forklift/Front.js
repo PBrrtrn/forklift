@@ -9,11 +9,17 @@ class Front extends Object3D {
 
   initialize3dComponents(n_rows, n_columns, shader, gl) {
     let curve = this.buildCurve(n_columns)
-    let surface = new SweepSurface(curve, n_rows)
+    let surface = new SweepSurface(curve, n_rows, true)
 
     this.renderable = new Renderable3D(shader, gl, surface)
   }
 
   buildCurve(n_columns) {
+    let s1 = new StraightLineXZ([0.7, 0.0, -0.4], [-0.7, 0.0, -0.4])
+    let s2 = new StraightLineXZ([-0.7, 0.0, -0.4], [0.0, 0.0, 0.4])
+    let s3 = new StraightLineXZ([0.0, 0.0, 0.4], [0.7, 0.0, 0.4])
+    let s4 = new StraightLineXZ([0.7, 0.0, 0.4], [0.7, 0.0, -0.4])
+
+    return new Curve([s1, s2, s3, s4])
   }
 }

@@ -33,30 +33,30 @@ class Forklift extends Object3D {
 
   initialize3dComponents(n_rows, n_columns, shader, gl) {
     this.wheel1 = new Wheel(n_rows, n_columns, shader, gl)
-    this.wheel1.translateZ(1)
+    this.wheel1.translateZ(1.5)
     this.wheel1.translateX(1.5)
     this.wheel1.rotateX(Math.PI/2)
 
     this.wheel2 = new Wheel(n_rows, n_columns, shader, gl)
-    this.wheel2.translateZ(1)
+    this.wheel2.translateZ(1.5)
     this.wheel2.translateX(-1.5)
     this.wheel2.rotateX(Math.PI/2)
 
     this.wheel3 = new Wheel(n_rows, n_columns, shader, gl)
-    this.wheel3.translateZ(-1)
+    this.wheel3.translateZ(-1.5)
     this.wheel3.translateX(1.5)
     this.wheel3.rotateX(Math.PI/2)
 
     this.wheel4 = new Wheel(n_rows, n_columns, shader, gl)
-    this.wheel4.translateZ(-1)
+    this.wheel4.translateZ(-1.5)
     this.wheel4.translateX(-1.5)
     this.wheel4.rotateX(Math.PI/2)
 
     this.chassis = new Chassis(n_rows, n_columns, shader, gl)
     this.chassis.translateY(-0.4)
-    this.chassis.translateZ(-0.4)
+    this.chassis.translateZ(-0.35)
     this.chassis.scaleX(3)
     this.chassis.scaleY(5)
-    this.chassis.scaleZ(2)
+    this.chassis.scaleZ(3)
   }
 }

@@ -1,4 +1,4 @@
-class Front extends Object3D {
+class Parallelepiped extends Object3D {
   draw(gl, parent_model_matrix, view_matrix, projection_matrix) {
     let model_matrix = this.modelMatrix(parent_model_matrix)
     let normal_matrix = this.normalMatrix(model_matrix, view_matrix)

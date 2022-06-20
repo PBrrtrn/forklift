@@ -12,7 +12,7 @@ class Chassis extends Object3D {
   initialize3dComponents(n_rows, n_columns, shader, gl) {
     this.body = new Body(n_rows, n_columns, shader, gl)
 
-    this.front = new Front(n_rows, n_columns, shader, gl)
+    this.front = new Parallelepiped(n_rows, n_columns, shader, gl)
     this.front.translateX(0.4)
     this.front.translateZ(0.22)
     this.front.translateY(0.35)
@@ -21,7 +21,7 @@ class Chassis extends Object3D {
     this.front.scaleX(0.1)
     this.front.rotateX(-Math.PI/2)
 
-    this.seat = new Front(n_rows, n_columns, shader, gl)
+    this.seat = new Parallelepiped(n_rows, n_columns, shader, gl)
     this.seat.translateX(-0.4)
     this.seat.translateZ(-0.25)
     this.seat.translateY(0.5)
@@ -31,7 +31,6 @@ class Chassis extends Object3D {
     this.seat.rotateX(-Math.PI/2)
     this.seat.rotateZ(Math.PI)
 
-    // this.seat = new Seat(n_rows, n_columns, shader, gl)
     // this.lift = new Lift(n_rows, n_columns, shader, gl)
   }
 }

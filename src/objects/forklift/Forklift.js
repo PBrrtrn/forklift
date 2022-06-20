@@ -23,12 +23,12 @@ class Forklift extends Object3D {
     // TODO: Implement
   }
 
-  raise() {
-    // TODO: Implement
+  raisePlatform() {
+    this.chassis.raisePlatform()
   }
 
-  lower() {
-    // TODO: Implement
+  lowerPlatform() {
+    this.chassis.lowerPlatform()
   }
 
   initialize3dComponents(n_rows, n_columns, shader, gl) {

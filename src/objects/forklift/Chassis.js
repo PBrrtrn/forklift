@@ -9,6 +9,14 @@ class Chassis extends Object3D {
     this.lift.draw(gl, model_matrix, view_matrix, projection_matrix)
   }
 
+  raisePlatform() {
+    this.lift.raisePlatform()
+  }
+
+  lowerPlatform() {
+    this.lift.lowerPlatform()
+  }
+
   initialize3dComponents(n_rows, n_columns, shader, gl) {
     this.body = new Body(n_rows, n_columns, shader, gl)
 

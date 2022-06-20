@@ -17,6 +17,8 @@ let projection_matrix = mat4.create()
 function run() {
   canvas = document.getElementById("my-canvas")
 
+  document.addEventListener("keydown", handleInput)
+
   try {
     gl = canvas.getContext("webgl")
   } catch(error) {
@@ -61,10 +63,20 @@ function initShaders() {
 function initObjects() {
   forklift = new Forklift(60, 60, shader, gl)
   forklift.translateY(-1)
-  forklift.rotateX(0.2)
-  forklift.scaleX(0.6)
-  forklift.scaleY(0.6)
-  forklift.scaleZ(0.6)
+  forklift.scaleX(0.5)
+  forklift.scaleY(0.5)
+  forklift.scaleZ(0.5)
+}
+
+function handleInput(e) {
+  switch (e.key) {
+    case 'q':
+      forklift.raisePlatform()
+      return
+    case 'e':
+      forklift.lowerPlatform()
+      return
+  }
 }
 
 function tick() {

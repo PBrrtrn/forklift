@@ -35,6 +35,18 @@ class Object3D {
     this.position[2] += distance
   }
 
+  scaleX(factor) {
+    this.scale[0] = this.scale[0]*factor
+  }
+
+  scaleY(factor) {
+    this.scale[1] = this.scale[1]*factor
+  }
+
+  scaleZ(factor) {
+    this.scale[2] = this.scale[2]*factor
+  }
+
   modelMatrix(parent_model_matrix) {
     let model_matrix = mat4.clone(parent_model_matrix)
 

@@ -10,7 +10,6 @@ canvas = null
 
 let shader = null
 let forklift = null
-let sweep_b2 = null
 
 let view_matrix = mat4.create()
 let projection_matrix = mat4.create()
@@ -61,7 +60,11 @@ function initShaders() {
  index buffers, populate them with appropriate data, and bind them */
 function initObjects() {
   forklift = new Forklift(60, 60, shader, gl)
-  sweep_b2 = new SweepB2(60, 60, shader, gl)
+  forklift.translateY(-1)
+  forklift.rotateX(0.2)
+  forklift.scaleX(0.6)
+  forklift.scaleY(0.6)
+  forklift.scaleZ(0.6)
 }
 
 function tick() {
@@ -77,13 +80,10 @@ function tick() {
 function drawScene() {
   let m = mat4.create()
   forklift.draw(gl, m, view_matrix, projection_matrix)
-  sweep_b2.draw(gl, m, view_matrix, projection_matrix)
 }
 
 function updateScene() {
   forklift.rotateY(0.01)
-  sweep_b2.rotateY(0.01)
-  sweep_b2.rotateX(0.01)
 }
 
 window.onload = run

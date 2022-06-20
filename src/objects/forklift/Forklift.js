@@ -7,6 +7,8 @@ class Forklift extends Object3D {
     this.wheel2.draw(gl, model_matrix, view_matrix, projection_matrix)
     this.wheel3.draw(gl, model_matrix, view_matrix, projection_matrix)
     this.wheel4.draw(gl, model_matrix, view_matrix, projection_matrix)
+
+    this.chassis.draw(gl, model_matrix, view_matrix, projection_matrix)
   }
 
   moveForward(distance) {
@@ -50,5 +52,11 @@ class Forklift extends Object3D {
     this.wheel4.translateX(-1.5)
     this.wheel4.rotateX(Math.PI/2)
 
+    this.chassis = new Chassis(n_rows, n_columns, shader, gl)
+    this.chassis.translateY(-0.4)
+    this.chassis.translateZ(-0.4)
+    this.chassis.scaleX(3)
+    this.chassis.scaleY(5)
+    this.chassis.scaleZ(2)
   }
 }

@@ -6,7 +6,7 @@ class Chassis extends Object3D {
     this.body.draw(gl, model_matrix, view_matrix, projection_matrix)
     this.front.draw(gl, model_matrix, view_matrix, projection_matrix)
     this.seat.draw(gl, model_matrix, view_matrix, projection_matrix)
-    // this.lift.draw(gl, model_matrix, view_matrix, projection_matrix)
+    this.lift.draw(gl, model_matrix, view_matrix, projection_matrix)
   }
 
   initialize3dComponents(n_rows, n_columns, shader, gl) {
@@ -31,6 +31,6 @@ class Chassis extends Object3D {
     this.seat.rotateX(-Math.PI/2)
     this.seat.rotateZ(Math.PI)
 
-    // this.lift = new Lift(n_rows, n_columns, shader, gl)
+    this.lift = new Lift(n_rows, n_columns, shader, gl)
   }
 }

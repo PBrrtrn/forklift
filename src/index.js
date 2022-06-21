@@ -6,12 +6,17 @@ let mat4 = glMatrix.mat4
 let vec3 = glMatrix.vec3
 
 let gl = null
-canvas = null
+let canvas = null
 
+let current_camera = 5
+let cameras = {}
+
+let side_camera = null
+let rear_tracking_camera = null
 let shader = null
 let forklift = null
 
-let view_matrix = mat4.create()
+// let view_matrix = mat4.create()
 let projection_matrix = mat4.create()
 
 function run() {
@@ -45,9 +50,6 @@ function setupWebGL() {
 
   let aspect_ratio = canvas.width/canvas.height
   mat4.perspective(projection_matrix, fov, aspect_ratio, near, far)
-
-  mat4.identity(view_matrix)
-  mat4.translate(view_matrix, view_matrix, [0.0, 0.0, -5.0])
 }
 
 function initShaders() {
@@ -61,8 +63,13 @@ function initShaders() {
  A renderable object is expected to create its own vertex, normal and
  index buffers, populate them with appropriate data, and bind them */
 function initObjects() {
+  // side_camera = new Camera([0,0,-10], [0,Math.PI,0])
+  // rear_tracking_camera = new Camera([0,0,-5], [0,0,0])
+  cameras[5] = new Camera([0,0,-6], [0,Math.PI/2,0]) // Rear tracking camera
+  cameras[6] = new Camera([0,0,-10], [0,Math.PI,0]) // Side tracking camera
+
   forklift = new Forklift(60, 60, shader, gl)
-  forklift.translateY(-1)
+  forklift.translateY(-1.5)
   forklift.scaleX(0.5)
   forklift.scaleY(0.5)
   forklift.scaleZ(0.5)
@@ -76,13 +83,18 @@ function handleInput(e) {
     case 'e':
       forklift.lowerPlatform()
       return
+    case '5':
+      current_camera = 5
+      return
+    case '6':
+      current_camera = 6
+      return
   }
 }
 
 function tick() {
   requestAnimationFrame(tick)
   drawScene()
-  updateScene() // Escuchar eventos de teclado?
 }
 
 /* Calls to draw every renderable object in the scene.
@@ -90,12 +102,13 @@ function tick() {
  set up its vertex shader matrices, use the appropriate GL Shader program,
  bind all buffers and make a call to drawElements */
 function drawScene() {
-  let m = mat4.create()
-  forklift.draw(gl, m, view_matrix, projection_matrix)
+  let view_matrix = cameras[current_camera].getViewMatrix()
+  let model_matrix = mat4.create()
+  forklift.draw(gl, model_matrix, view_matrix, projection_matrix)
 }
 
 function updateScene() {
-  forklift.rotateY(0.01)
+  // forklift.rotateY(0.01)
 }
 
 window.onload = run

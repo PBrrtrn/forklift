@@ -1,7 +1,6 @@
 class Forklift extends Object3D {
   draw(gl, parent_model_matrix, view_matrix, projection_matrix) {
     let model_matrix = this.modelMatrix(parent_model_matrix)
-    let normal_matrix = this.normalMatrix(model_matrix, view_matrix)
 
     this.wheel1.draw(gl, model_matrix, view_matrix, projection_matrix)
     this.wheel2.draw(gl, model_matrix, view_matrix, projection_matrix)

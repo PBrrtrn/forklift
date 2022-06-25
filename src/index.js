@@ -8,15 +8,17 @@ let vec3 = glMatrix.vec3
 let gl = null
 let canvas = null
 
-let current_camera = 5
+let current_camera = 1
 let cameras = {}
 
 let side_camera = null
 let rear_tracking_camera = null
-let shader = null
-let forklift = null
 
-// let view_matrix = mat4.create()
+let shader = null
+
+let forklift = null
+let shelf = null
+
 let projection_matrix = mat4.create()
 
 function run() {
@@ -63,16 +65,20 @@ function initShaders() {
  A renderable object is expected to create its own vertex, normal and
  index buffers, populate them with appropriate data, and bind them */
 function initObjects() {
-  // side_camera = new Camera([0,0,-10], [0,Math.PI,0])
-  // rear_tracking_camera = new Camera([0,0,-5], [0,0,0])
-  cameras[5] = new Camera([0,0,-6], [0,Math.PI/2,0]) // Rear tracking camera
-  cameras[6] = new Camera([0,0,-10], [0,Math.PI,0]) // Side tracking camera
+  cameras[1] = new GeneralOrbitalCamera([1,-2,-10], [0.5,0,0])
+  cameras[5] = new RearTrackingCamera() // Rear tracking camera
+  cameras[6] = new GeneralOrbitalCamera([0,0,-10], [0,Math.PI,0]) // Side tracking camera
 
   forklift = new Forklift(60, 60, shader, gl)
-  forklift.translateY(-1.5)
+  forklift.translateY(0.3)
   forklift.scaleX(0.5)
   forklift.scaleY(0.5)
   forklift.scaleZ(0.5)
+
+  shelf = new Shelf(20, 20, shader, gl)
+  shelf.translateZ(2.5)
+  shelf.translateX(-3)
+  shelf.rotateY(Math.PI/2)
 }
 
 function handleInput(e) {
@@ -83,6 +89,9 @@ function handleInput(e) {
     case 'e':
       forklift.lowerPlatform()
       return
+    case '1':
+        current_camera = 1
+        return
     case '5':
       current_camera = 5
       return
@@ -94,6 +103,7 @@ function handleInput(e) {
 
 function tick() {
   requestAnimationFrame(tick)
+  // updateScene()
   drawScene()
 }
 
@@ -102,13 +112,17 @@ function tick() {
  set up its vertex shader matrices, use the appropriate GL Shader program,
  bind all buffers and make a call to drawElements */
 function drawScene() {
+  cameras[current_camera].update(forklift.position, forklift.angle)
+  
   let view_matrix = cameras[current_camera].getViewMatrix()
   let model_matrix = mat4.create()
+
   forklift.draw(gl, model_matrix, view_matrix, projection_matrix)
+  shelf.draw(gl, model_matrix, view_matrix, projection_matrix)
 }
 
 function updateScene() {
-  // forklift.rotateY(0.01)
+  forklift.rotateY(0.01)
 }
 
 window.onload = run

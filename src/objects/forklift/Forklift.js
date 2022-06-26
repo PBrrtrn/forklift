@@ -13,6 +13,11 @@ class Forklift extends Object3D {
   moveForward() {
     this.translateX(Math.sin(this.angle[1] + Math.PI/2) * 0.1 )
     this.translateZ(Math.cos(this.angle[1] + Math.PI/2) * 0.1 )
+
+    this.wheel1.rotateY(0.2)
+    this.wheel2.rotateY(0.2)
+    this.wheel3.rotateY(0.2)
+    this.wheel4.rotateY(0.2)
   }
 
   moveBackwards() {

@@ -22,6 +22,12 @@ let printer = null
 
 let projection_matrix = mat4.create()
 
+let printer_settings = {
+  rows: 20,
+  columns: 20,
+  figure: 'A1'
+}
+
 function run() {
   canvas = document.getElementById("my-canvas")
 
@@ -37,6 +43,7 @@ function run() {
     setupWebGL()
     initShaders()
     initObjects()
+    initGUI()
     tick()
   } else {
     alert("Error: Your browser does not appear to support WebGL.")
@@ -86,7 +93,42 @@ function initObjects() {
   printer = new Printer(60, 60, shader, gl)
   printer.translateX(5)
   printer.translateY(1)
-  
+}
+
+function printSelected() {
+  let object
+
+  let rows = printer_settings.rows
+  let columns = printer_settings.columns
+  switch (printer_settings.figure) {
+    case 'A1':
+      object = new RevolutionA1(rows, columns, shader, gl)
+      break
+    case 'B2':
+      object = new SweepB2(rows, columns, shader, gl)
+      object.translateY(-0.25)
+      break
+  }
+
+  printer.print(object)
+}
+
+function initGUI() {
+  var gui = new dat.GUI()
+
+  var figure_folder = gui.addFolder('Figure Type')
+  figure_folder.add(printer_settings, 'figure', ['A1', 'B2']).name("Figure type")
+
+  var detail_folder = gui.addFolder('Level of detail')
+  detail_folder.add(printer_settings, 'rows', 10, 60).name("Rows").step(1)
+  detail_folder.add(printer_settings, 'columns', 10, 60).name("Columns").step(1)
+
+  var actions_folder = gui.addFolder('Actions')
+  actions_folder.add(window, 'printSelected').name("Print");
+
+  figure_folder.open()
+  detail_folder.open()
+  actions_folder.open()
 }
 
 function handleInput(e) {

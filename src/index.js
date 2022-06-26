@@ -18,6 +18,7 @@ let shader = null
 
 let forklift = null
 let shelf = null
+let printer = null
 
 let projection_matrix = mat4.create()
 
@@ -65,7 +66,7 @@ function initShaders() {
  A renderable object is expected to create its own vertex, normal and
  index buffers, populate them with appropriate data, and bind them */
 function initObjects() {
-  cameras[1] = new OrbitalCamera([1,-2,-10], [0.5,0,0])
+  cameras[1] = new OrbitalCamera([0,-4,-14], [0.8,0,0])
   cameras[3] = new OrbitalCamera([-1.8,-2.5,-3.5], [0,-Math.PI/2,0])
   cameras[4] = new TrackingCamera([0,-1,-2], -Math.PI/2) // First person camera
   cameras[5] = new TrackingCamera([0,0,-5], -Math.PI/2) // Rear tracking camera
@@ -81,6 +82,11 @@ function initObjects() {
   shelf.translateZ(2.5)
   shelf.translateX(-3)
   shelf.rotateY(Math.PI/2)
+
+  printer = new Printer(60, 60, shader, gl)
+  printer.translateX(5)
+  printer.translateY(1)
+  
 }
 
 function handleInput(e) {
@@ -137,6 +143,7 @@ function drawScene() {
 
   forklift.draw(gl, model_matrix, view_matrix, projection_matrix)
   shelf.draw(gl, model_matrix, view_matrix, projection_matrix)
+  printer.draw(gl, model_matrix, view_matrix, projection_matrix)
 }
 
 function updateScene() {

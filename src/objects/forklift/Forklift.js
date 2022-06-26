@@ -11,7 +11,6 @@ class Forklift extends Object3D {
   }
 
   moveForward() {
-    debugger
     this.translateX(Math.sin(this.angle[1] + Math.PI/2) * 0.1 )
     this.translateZ(Math.cos(this.angle[1] + Math.PI/2) * 0.1 )
   }

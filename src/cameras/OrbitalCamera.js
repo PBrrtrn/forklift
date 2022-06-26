@@ -1,14 +1,10 @@
-class GeneralOrbitalCamera {
+class OrbitalCamera {
   constructor(position, angle) {
     this.position = position
     this.angle = angle
   }
 
-  update(center, angle) {
-    // pass
-  }
-
-  getViewMatrix() {
+  getViewMatrix(_position, _angle) {
     let view_matrix = glMatrix.mat4.create()
 
     mat4.translate(view_matrix, view_matrix, this.position)

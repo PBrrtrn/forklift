@@ -65,9 +65,9 @@ function initShaders() {
  A renderable object is expected to create its own vertex, normal and
  index buffers, populate them with appropriate data, and bind them */
 function initObjects() {
-  cameras[1] = new GeneralOrbitalCamera([1,-2,-10], [0.5,0,0])
-  cameras[5] = new RearTrackingCamera() // Rear tracking camera
-  cameras[6] = new GeneralOrbitalCamera([0,0,-10], [0,Math.PI,0]) // Side tracking camera
+  cameras[1] = new OrbitalCamera([1,-2,-10], [0.5,0,0])
+  cameras[5] = new TrackingCamera([0,0,-5], -Math.PI/2) // Rear tracking camera
+  cameras[6] = new TrackingCamera([0,0,-10], Math.PI) // Side tracking camera
 
   forklift = new Forklift(60, 60, shader, gl)
   forklift.translateY(0.3)
@@ -124,9 +124,7 @@ function tick() {
  set up its vertex shader matrices, use the appropriate GL Shader program,
  bind all buffers and make a call to drawElements */
 function drawScene() {
-  cameras[current_camera].update(forklift.position, forklift.angle)
-  
-  let view_matrix = cameras[current_camera].getViewMatrix()
+  let view_matrix = cameras[current_camera].getViewMatrix(forklift.position, forklift.angle)
   let model_matrix = mat4.create()
 
   forklift.draw(gl, model_matrix, view_matrix, projection_matrix)

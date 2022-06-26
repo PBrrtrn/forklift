@@ -66,6 +66,8 @@ function initShaders() {
  index buffers, populate them with appropriate data, and bind them */
 function initObjects() {
   cameras[1] = new OrbitalCamera([1,-2,-10], [0.5,0,0])
+  cameras[3] = new OrbitalCamera([-1.8,-2.5,-3.5], [0,-Math.PI/2,0])
+  cameras[4] = new TrackingCamera([0,-1,-2], -Math.PI/2) // First person camera
   cameras[5] = new TrackingCamera([0,0,-5], -Math.PI/2) // Rear tracking camera
   cameras[6] = new TrackingCamera([0,0,-10], Math.PI) // Side tracking camera
 
@@ -102,8 +104,14 @@ function handleInput(e) {
       forklift.lowerPlatform()
       return
     case '1':
-        current_camera = 1
-        return
+      current_camera = 1
+      return
+    case '3':
+      current_camera = 3
+      return
+    case '4':
+      current_camera = 4
+      return
     case '5':
       current_camera = 5
       return

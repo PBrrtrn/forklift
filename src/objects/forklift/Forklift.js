@@ -10,12 +10,23 @@ class Forklift extends Object3D {
     this.chassis.draw(gl, model_matrix, view_matrix, projection_matrix)
   }
 
-  moveForward(distance) {
-    // TODO: Implement
+  moveForward() {
+    debugger
+    this.translateX(Math.sin(this.angle[1] + Math.PI/2) * 0.1 )
+    this.translateZ(Math.cos(this.angle[1] + Math.PI/2) * 0.1 )
   }
 
-  moveBackwards(distance) {
-    // TODO: Implement
+  moveBackwards() {
+    this.translateX(Math.sin(this.angle[1] + Math.PI/2) * -0.1 )
+    this.translateZ(Math.cos(this.angle[1] + Math.PI/2) * -0.1 )
+  }
+
+  turnLeft() {
+    this.rotateY(0.1)
+  }
+
+  turnRight() {
+    this.rotateY(-0.1)
   }
 
   grabObject(object) {

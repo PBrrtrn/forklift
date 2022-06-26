@@ -83,6 +83,18 @@ function initObjects() {
 
 function handleInput(e) {
   switch (e.key) {
+    case 'w':
+      forklift.moveForward()
+      return
+    case 'a':
+      forklift.turnLeft()
+      return
+    case 's':
+      forklift.moveBackwards()
+      return
+    case 'd':
+      forklift.turnRight()
+      return
     case 'q':
       forklift.raisePlatform()
       return

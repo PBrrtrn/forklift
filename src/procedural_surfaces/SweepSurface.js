@@ -11,6 +11,7 @@ class SweepSurface {
 
     this.vertex_positions = vertices.map((v) => v.position).flat()
     this.vertex_normals = vertices.map((v) => v.normal).flat()
+    this.vertex_uv_coordinates = vertices.map((v) => [0,0]).flat() // Hacer de verdad
 
     this.vertex_indices = this.buildVertexIndices(curve_vertices, n_rows, lids)
 
@@ -22,6 +23,10 @@ class SweepSurface {
 
   getVertexNormals() {
     return this.vertex_normals
+  }
+
+  getVertexUvCoordinates() {
+    return this.vertex_uv_coordinates
   }
 
   getVertexIndices() {

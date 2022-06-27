@@ -21,6 +21,7 @@
     <script type="text/javascript" src="js/dat.gui.min.js"></script>
 
     <script type="text/javascript" src="src/ShaderProgram.js"></script>
+    <script type="text/javascript" src="src/Texture.js"></script>
 
     <script type="text/javascript" src="src/cameras/OrbitalCamera.js"></script>
     <script type="text/javascript" src="src/cameras/TrackingCamera.js"></script>
@@ -59,6 +60,7 @@
 
       attribute vec3 aVertexPosition;
       attribute vec3 aVertexNormal;
+      attribute vec2 aVertexUvCoordinate;
 
       uniform mat4 model_matrix;            
       uniform mat4 view_matrix;
@@ -66,14 +68,16 @@
 
       uniform mat4 normal_matrix;
 
-      varying vec3 vNormal;    
-      varying vec3 vPosWorld;  
+      varying vec3 vNormal;
+      varying vec3 vPosWorld;
+      varying vec2 vUvCoordinate;
 
       void main(void) {
         gl_Position = projection_matrix * view_matrix * model_matrix * vec4(aVertexPosition, 1.0);
 
         vPosWorld = (model_matrix * vec4(aVertexPosition,1.0) ).xyz;    //la posicion en coordenadas de mundo
-        vNormal= (normal_matrix * vec4(aVertexNormal,1.0) ).xyz;       //la normal en coordenadas de mundo                 
+        vNormal = (normal_matrix * vec4(aVertexNormal,1.0) ).xyz;       //la normal en coordenadas de mundo                 
+        vUvCoordinate = aVertexUvCoordinate;
       }
     </script>
 
@@ -81,6 +85,7 @@
       precision highp float;
       varying vec3 vNormal;
       varying vec3 vPosWorld;
+      varying vec2 vUvCoordinate;
 
       void main(void) {
         vec3 lightVec = normalize(vec3(0.0,3.0,5.0) - vPosWorld);

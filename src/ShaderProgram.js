@@ -14,9 +14,10 @@ class ShaderProgram {
     }
   }
 
-  use(gl, model_matrix, normal_matrix, view_matrix, projection_matrix,
-      vertex_position_buffer, vertex_normal_buffer) {
+  use(gl, model_matrix, normal_matrix, view_matrix, projection_matrix, 
+      vertex_position_buffer, vertex_normal_buffer, vertex_uv_buffer) {
     gl.useProgram(this.program)
+    // usar la textura
 
     let model_uniform = gl.getUniformLocation(this.program, "model_matrix")
     let view_uniform = gl.getUniformLocation(this.program, "view_matrix")
@@ -37,6 +38,11 @@ class ShaderProgram {
     gl.enableVertexAttribArray(vertex_normal)
     gl.bindBuffer(gl.ARRAY_BUFFER, vertex_normal_buffer)
     gl.vertexAttribPointer(vertex_normal, 3, gl.FLOAT, false, 0, 0)
+
+    let vertex_uv_coordinate = gl.getAttribLocation(this.program, "aVertexUvCoordinate")
+    gl.enableVertexAttribArray(vertex_uv_coordinate)
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_uv_buffer)
+    gl.vertexAttribPointer(vertex_uv_coordinate, 2, gl.FLOAT, false, 0, 0)
   }
 
   makeShader(source, type) {

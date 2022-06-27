@@ -35,13 +35,20 @@ class Renderable3D {
   }
 
   render(gl, model_matrix, normal_matrix, view_matrix, projection_matrix) {
+    // Settear la textura para usar
+    if (this.texture) {
+      this.texture.use(gl)
+    } else {
+      gl.bindTexture(gl.TEXTURE_2D, null)
+    }
+
     this.shader.use(gl, model_matrix, normal_matrix, view_matrix, 
                     projection_matrix, this.vertex_buffer, this.normal_buffer, this.uv_buffer)
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.index_buffer)
     gl.drawElements(gl.TRIANGLE_STRIP, 
                     this.index_buffer.number_vertex_point,
-                    gl.UNSIGNED_SHORT, 0)
+                    gl.UNSIGNED_SHORT, 0) 
   }
 
 }

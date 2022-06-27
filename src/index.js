@@ -20,6 +20,8 @@ let forklift = null
 let shelf = null
 let printer = null
 
+let forklift_textures = {}
+
 let projection_matrix = mat4.create()
 
 let printer_settings = {
@@ -42,6 +44,7 @@ function run() {
   if (gl) {
     setupWebGL()
     initShaders()
+    initTextures()
     initObjects()
     initGUI()
     tick()
@@ -69,6 +72,15 @@ function initShaders() {
   shader = new ShaderProgram(vertex_shader_source, fragments_shader_source, gl)
 }
 
+function initTextures() {
+  forklift_textures = {
+    wheel: new Texture(gl, '../../../assets/textures/wheel.jpg'),
+    chassis: {
+      body: new Texture(gl, '../../../assets/textures/chassis_body.jpg')
+    }
+  }
+}
+
 /* Calls the constructor for every renderable object in the scene.
  A renderable object is expected to create its own vertex, normal and
  index buffers, populate them with appropriate data, and bind them */
@@ -79,12 +91,13 @@ function initObjects() {
   cameras[5] = new TrackingCamera([0,0,-5], -Math.PI/2) // Rear tracking camera
   cameras[6] = new TrackingCamera([0,0,-10], Math.PI) // Side tracking camera
 
-  forklift = new Forklift(60, 60, shader, gl)
+  forklift = new Forklift(60, 60, shader, forklift_textures, gl)
   forklift.translateY(0.3)
   forklift.scaleX(0.5)
   forklift.scaleY(0.5)
   forklift.scaleZ(0.5)
 
+  /*
   shelf = new Shelf(20, 20, shader, gl)
   shelf.translateZ(2.5)
   shelf.translateX(-3)
@@ -93,6 +106,7 @@ function initObjects() {
   printer = new Printer(60, 60, shader, gl)
   printer.translateX(5)
   printer.translateY(1)
+  */
 }
 
 function printSelected() {
@@ -110,7 +124,7 @@ function printSelected() {
       break
   }
 
-  printer.print(object)
+  // printer.print(object)
 }
 
 function initGUI() {
@@ -171,7 +185,6 @@ function handleInput(e) {
 
 function tick() {
   requestAnimationFrame(tick)
-  // updateScene()
   drawScene()
 }
 
@@ -184,12 +197,8 @@ function drawScene() {
   let model_matrix = mat4.create()
 
   forklift.draw(gl, model_matrix, view_matrix, projection_matrix)
-  shelf.draw(gl, model_matrix, view_matrix, projection_matrix)
-  printer.draw(gl, model_matrix, view_matrix, projection_matrix)
-}
-
-function updateScene() {
-  forklift.rotateY(0.01)
+  // shelf.draw(gl, model_matrix, view_matrix, projection_matrix)
+  // printer.draw(gl, model_matrix, view_matrix, projection_matrix)
 }
 
 window.onload = run

@@ -13,7 +13,7 @@ class Wheel extends Object3D {
     let curve = this.buildCurve(n_rows)
     let surface = new RevolutionSurface(curve, n_columns)
 
-    this.renderable = new Renderable3D(shader, null, gl, surface)
+    this.renderable = new Renderable3D(shader, gl, surface)
   }
 
   buildCurve(n_rows) {

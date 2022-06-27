@@ -17,7 +17,6 @@ class ShaderProgram {
   use(gl, model_matrix, normal_matrix, view_matrix, projection_matrix, 
       vertex_position_buffer, vertex_normal_buffer, vertex_uv_buffer) {
     gl.useProgram(this.program)
-    // usar la textura
 
     let model_uniform = gl.getUniformLocation(this.program, "model_matrix")
     let view_uniform = gl.getUniformLocation(this.program, "view_matrix")

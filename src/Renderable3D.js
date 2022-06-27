@@ -1,7 +1,6 @@
 class Renderable3D {
-  constructor(shader, texture, gl, surface) {
+  constructor(shader, gl, surface) {
     this.shader = shader
-    this.texture = texture
 
     let vertex_position_array = surface.getVertexPositions()
     let vertex_normal_array = surface.getVertexNormals()

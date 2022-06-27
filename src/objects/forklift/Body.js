@@ -11,7 +11,7 @@ class Body extends Object3D {
     let curve = this.buildCurve(n_columns)
     let surface = new SweepSurface(curve, n_rows, true)
 
-    this.renderable = new Renderable3D(shader, null, gl, surface)
+    this.renderable = new Renderable3D(shader, gl, surface)
   }
 
   buildCurve(n_columns) {

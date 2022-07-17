@@ -22,13 +22,13 @@ class Shelf extends Object3D {
     
   }
 
-  initialize3dComponents(n_rows, n_columns, shader, gl) {
-    this.beam = new Cuboid(n_rows, n_columns, shader, gl)
+  initialize3dComponents(n_rows, n_columns, shader, textures, gl) {
+    this.beam = new Cuboid(n_rows, n_columns, shader, textures.beam, gl)
     this.beam.scaleY(10)
     this.beam.scaleX(0.02)
     this.beam.scaleZ(0.02)
 
-    this.plank = new Cuboid(n_rows, n_columns, shader, gl)
+    this.plank = new Cuboid(n_rows, n_columns, shader, textures.plank, gl)
     this.plank.translateZ(0.3)
     this.plank.translateX(4.1)
     this.plank.scaleY(0.1)

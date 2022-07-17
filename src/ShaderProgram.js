@@ -23,10 +23,13 @@ class ShaderProgram {
     let projection_uniform = gl.getUniformLocation(this.program, "projection_matrix")
     let normal_uniform = gl.getUniformLocation(this.program, "normal_matrix")
 
+    let texture_uniform = gl.getUniformLocation(this.program, "texture_uniform")
+
     gl.uniformMatrix4fv(model_uniform, false, model_matrix)
     gl.uniformMatrix4fv(normal_uniform, false, normal_matrix)
     gl.uniformMatrix4fv(view_uniform, false, view_matrix)
     gl.uniformMatrix4fv(projection_uniform, false, projection_matrix)
+    gl.uniform1i(texture_uniform, 0);
 
     let vertex_position = gl.getAttribLocation(this.program, "aVertexPosition")
     gl.enableVertexAttribArray(vertex_position)

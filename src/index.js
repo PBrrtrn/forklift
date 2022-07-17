@@ -74,23 +74,54 @@ function initShaders() {
  index buffers, populate them with appropriate data, and bind them */
 function initObjects() {
   cameras[1] = new OrbitalCamera([0,-4,-14], [0.8,0,0])
+  cameras[2] = new OrbitalCamera([-1.8,-2.5,-3.5], [0, Math.PI, 0])
   cameras[3] = new OrbitalCamera([-1.8,-2.5,-3.5], [0,-Math.PI/2,0])
   cameras[4] = new TrackingCamera([0,-1,-2], -Math.PI/2) // First person camera
   cameras[5] = new TrackingCamera([0,0,-5], -Math.PI/2) // Rear tracking camera
   cameras[6] = new TrackingCamera([0,0,-10], Math.PI) // Side tracking camera
 
-  forklift = new Forklift(60, 60, shader, gl)
+  forklift_textures = {
+    wheel: new ImageTexture(gl, 'resources/textures/wheel.jpg'),
+    chassis: {
+      body: new ColorTexture(gl, [155, 0, 0, 255]),
+      front: new ColorTexture(gl, [155, 0, 0, 255]),
+      seat: new ColorTexture(gl, [155, 0, 0, 255]),
+      lift: {
+        vertical_beam: new ColorTexture(gl, [155, 0, 0, 255]),
+        horizontal_beam: new ColorTexture(gl, [155, 0, 0, 255]),
+        platform: new ColorTexture(gl, [155, 0, 0, 255])
+      }
+    }
+  }
+
+  forklift = new Forklift(60, 60, shader, forklift_textures, gl)
   forklift.translateY(0.3)
   forklift.scaleX(0.5)
   forklift.scaleY(0.5)
   forklift.scaleZ(0.5)
 
-  shelf = new Shelf(20, 20, shader, gl)
+  shelf_textures = {
+    beam: new ColorTexture(gl, [155, 0, 0, 255]),
+    plank: new ColorTexture(gl, [155, 0, 0, 255])
+  }
+
+  shelf = new Shelf(20, 20, shader, shelf_textures, gl)
   shelf.translateZ(2.5)
   shelf.translateX(-3)
   shelf.rotateY(Math.PI/2)
 
-  printer = new Printer(60, 60, shader, gl)
+  printer_textures = {
+    base: new ColorTexture(gl, [155, 0, 0, 255]),
+    arm_stand: new ColorTexture(gl, [155, 0, 0, 255]),
+    arm: {
+      dock: new ColorTexture(gl, [155, 0, 0, 255]),
+      beam: new ColorTexture(gl, [155, 0, 0, 255]),
+      base: new ColorTexture(gl, [155, 0, 0, 255]),
+      screen: new ColorTexture(gl, [155, 0, 0, 255])
+    }
+  }
+
+  printer = new Printer(60, 60, shader, printer_textures, gl)
   printer.translateX(5)
   printer.translateY(1)
 }
@@ -100,12 +131,13 @@ function printSelected() {
 
   let rows = printer_settings.rows
   let columns = printer_settings.columns
+  let selected_texture = null // Asignar
   switch (printer_settings.figure) {
     case 'A1':
-      object = new RevolutionA1(rows, columns, shader, gl)
+      object = new RevolutionA1(rows, columns, shader, selected_texture, gl)
       break
     case 'B2':
-      object = new SweepB2(rows, columns, shader, gl)
+      object = new SweepB2(rows, columns, shader, selected_texture, gl)
       object.translateY(-0.25)
       break
   }
@@ -153,6 +185,9 @@ function handleInput(e) {
       return
     case '1':
       current_camera = 1
+      return
+    case '2':
+      current_camera = 2
       return
     case '3':
       current_camera = 3

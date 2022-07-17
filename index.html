@@ -21,6 +21,8 @@
     <script type="text/javascript" src="js/dat.gui.min.js"></script>
 
     <script type="text/javascript" src="src/ShaderProgram.js"></script>
+    <script type="text/javascript" src="src/ImageTexture.js"></script>
+    <script type="text/javascript" src="src/ColorTexture.js"></script>
 
     <script type="text/javascript" src="src/cameras/OrbitalCamera.js"></script>
     <script type="text/javascript" src="src/cameras/TrackingCamera.js"></script>
@@ -61,10 +63,9 @@
       attribute vec3 aVertexNormal;
       attribute vec2 aVertexUvCoordinate;
 
-      uniform mat4 model_matrix;            
+      uniform mat4 model_matrix;
       uniform mat4 view_matrix;
       uniform mat4 projection_matrix;
-
       uniform mat4 normal_matrix;
 
       varying vec3 vNormal;
@@ -86,12 +87,15 @@
       varying vec3 vPosWorld;
       varying vec2 vUvCoordinate;
 
+      uniform sampler2D texture_uniform;
+
       void main(void) {
         vec3 lightVec = normalize(vec3(0.0,3.0,5.0) - vPosWorld);
         vec3 diffColor = mix(vec3(0.7,0.7,0.7), vNormal, 0.4);
         vec3 color = dot(lightVec, vNormal) * diffColor + vec3(0.2,0.2,0.2);
 
-        gl_FragColor = vec4(color,1.0);
+        // gl_FragColor = vec4(color,1.0);
+        gl_FragColor = texture2D(texture_uniform, vUvCoordinate);
       }
     </script>
 

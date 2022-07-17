@@ -1,10 +1,10 @@
 class Object3D {
-  constructor(n_rows, n_columns, shader, gl) {
+  constructor(n_rows, n_columns, shader, textures, gl) {
     this.position = [0.0, 0.0, 0.0]
     this.angle = [0.0, 0.0, 0.0]
     this.scale = [1.0, 1.0, 1.0]
 
-    this.initialize3dComponents(n_rows, n_columns, shader, gl)
+    this.initialize3dComponents(n_rows, n_columns, shader, textures, gl)
   }
 
   render(gl, model_matrix, view_matrix, projection_matrix) {
@@ -72,7 +72,7 @@ class Object3D {
     return normal_matrix
   }
 
-  initialize3dComponents(n_rows, n_columns, shader, gl) {
+  initialize3dComponents(n_rows, n_columns, shader, textures, gl) {
     throw "Must implement in derived classes"
   }
 }

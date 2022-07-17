@@ -1,6 +1,7 @@
 class Renderable3D {
-  constructor(shader, gl, surface) {
+  constructor(shader, texture, gl, surface) {
     this.shader = shader
+    this.texture = texture
 
     let vertex_position_array = surface.getVertexPositions()
     let vertex_normal_array = surface.getVertexNormals()
@@ -36,6 +37,8 @@ class Renderable3D {
   render(gl, model_matrix, normal_matrix, view_matrix, projection_matrix) {
     this.shader.use(gl, model_matrix, normal_matrix, view_matrix, 
                     projection_matrix, this.vertex_buffer, this.normal_buffer, this.uv_buffer)
+
+    this.texture.use(gl)
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.index_buffer)
     gl.drawElements(gl.TRIANGLE_STRIP, 

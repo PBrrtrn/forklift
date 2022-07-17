@@ -7,7 +7,7 @@ class RevolutionA1 extends Object3D {
                            view_matrix, projection_matrix)
   }
 
-  initialize3dComponents(n_rows, n_columns, shader, gl) {
+  initialize3dComponents(n_rows, n_columns, shader, texture, gl) {
     let curve = this.buildCurve(n_rows)
     let surface = new RevolutionSurface(curve, n_columns)
 

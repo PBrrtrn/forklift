@@ -30,8 +30,8 @@ class RevolutionSurface {
     let vertices = []
 
     for (let i = 0; i <= n_slices; i++) {
-      let u = (i/n_slices)
-      let vertex_slice = this.getVertexSlice(u, curve_vertices)
+      let phi = i * 2 * Math.PI/n_slices
+      let vertex_slice = this.getVertexSlice(phi, curve_vertices)
 
       vertices.push.apply(vertices, vertex_slice)
     }
@@ -54,12 +54,9 @@ class RevolutionSurface {
     return vertex_indices
   }
 
-  getVertexSlice(u, curve_vertices) {
-    let phi = u * 2 * Math.PI
+  getVertexSlice(phi, curve_vertices) {
     let vertex_slice = []
     for (let i = 0; i < curve_vertices.length; i++) {
-      let v = i/curve_vertices.length
-
       let curve_vertex = curve_vertices[i]
 
       let pos_x = curve_vertex.position[0]*Math.cos(phi)
@@ -69,6 +66,18 @@ class RevolutionSurface {
       let normal_x = curve_vertex.normal[0]*Math.cos(phi)
       let normal_y = curve_vertex.normal[1]
       let normal_z = curve_vertex.normal[0]*Math.sin(phi)
+
+      let u = 0
+      let v = 0
+      debugger
+      if (i/curve_vertices.length < 0.5) {
+        u = 0.5 + Math.cos(phi) * i /curve_vertices.length
+        v = 0.5 + Math.sin(phi) * i /curve_vertices.length 
+      } else {
+        u = Math.cos(phi) * i /curve_vertices.length
+        v = Math.sin(phi) * i /curve_vertices.length
+        debugger
+      }
 
       let vertex = {
         position: [pos_x, pos_y, pos_z],

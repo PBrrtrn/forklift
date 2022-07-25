@@ -50,6 +50,7 @@
     <script type="text/javascript" src="src/objects/printer_objects/RevolutionA1.js"></script>
     <script type="text/javascript" src="src/objects/printer_objects/SweepB2.js"></script>
 
+    <script type="text/javascript" src="src/texture_maps/DefaultTextureMap.js"></script>
     <script type="text/javascript" src="src/texture_maps/WheelTextureMap.js"></script>
 
     <script type="text/javascript" src="src/curves/Curve.js"></script>
@@ -96,8 +97,8 @@
         vec3 diffColor = mix(vec3(0.7,0.7,0.7), vNormal, 0.4);
         vec3 color = dot(lightVec, vNormal) * diffColor + vec3(0.2,0.2,0.2);
 
-        // gl_FragColor = vec4(color,1.0);
-        gl_FragColor = texture2D(texture_uniform, vUvCoordinate);
+        gl_FragColor = vec4(color,1.0);
+        // gl_FragColor = texture2D(texture_uniform, vUvCoordinate);
       }
     </script>
 

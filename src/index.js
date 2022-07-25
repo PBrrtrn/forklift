@@ -17,8 +17,8 @@ let rear_tracking_camera = null
 let shader = null
 
 let forklift = null
-// let shelf = null
-// let printer = null
+let shelf = null
+let printer = null
 
 let projection_matrix = mat4.create()
 
@@ -83,7 +83,7 @@ function initObjects() {
   forklift_textures = {
     wheel: new ImageTexture(gl, 'resources/textures/wheel.jpg'),
     chassis: {
-      body: new ColorTexture(gl, [155, 0, 0, 255]),
+      body: new ColorTexture(gl, [144, 0, 0, 255]),
       front: new ColorTexture(gl, [155, 0, 0, 255]),
       seat: new ColorTexture(gl, [155, 0, 0, 255]),
       lift: {
@@ -100,7 +100,6 @@ function initObjects() {
   forklift.scaleY(0.5)
   forklift.scaleZ(0.5)
 
-  /*
   shelf_textures = {
     beam: new ColorTexture(gl, [155, 0, 0, 255]),
     plank: new ColorTexture(gl, [155, 0, 0, 255])
@@ -125,7 +124,6 @@ function initObjects() {
   printer = new Printer(60, 60, shader, printer_textures, gl)
   printer.translateX(5)
   printer.translateY(1)
-  */
 }
 
 function printSelected() {
@@ -221,8 +219,8 @@ function drawScene() {
   let model_matrix = mat4.create()
 
   forklift.draw(gl, model_matrix, view_matrix, projection_matrix)
-  // shelf.draw(gl, model_matrix, view_matrix, projection_matrix)
-  // printer.draw(gl, model_matrix, view_matrix, projection_matrix)
+  shelf.draw(gl, model_matrix, view_matrix, projection_matrix)
+  printer.draw(gl, model_matrix, view_matrix, projection_matrix)
 }
 
 function updateScene() {

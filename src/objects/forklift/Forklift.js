@@ -7,7 +7,7 @@ class Forklift extends Object3D {
     this.wheel3.draw(gl, model_matrix, view_matrix, projection_matrix)
     this.wheel4.draw(gl, model_matrix, view_matrix, projection_matrix)
 
-    this.chassis.draw(gl, model_matrix, view_matrix, projection_matrix)
+    // this.chassis.draw(gl, model_matrix, view_matrix, projection_matrix)
   }
 
   moveForward() {
@@ -23,6 +23,11 @@ class Forklift extends Object3D {
   moveBackwards() {
     this.translateX(Math.sin(this.angle[1] + Math.PI/2) * -0.1 )
     this.translateZ(Math.cos(this.angle[1] + Math.PI/2) * -0.1 )
+
+    this.wheel1.rotateY(0.2)
+    this.wheel2.rotateY(0.2)
+    this.wheel3.rotateY(0.2)
+    this.wheel4.rotateY(0.2)
   }
 
   turnLeft() {
@@ -38,11 +43,11 @@ class Forklift extends Object3D {
   }
 
   raisePlatform() {
-    this.chassis.raisePlatform()
+    // this.chassis.raisePlatform()
   }
 
   lowerPlatform() {
-    this.chassis.lowerPlatform()
+    // this.chassis.lowerPlatform()
   }
 
   initialize3dComponents(n_rows, n_columns, shader, textures, gl) {
@@ -66,11 +71,13 @@ class Forklift extends Object3D {
     this.wheel4.translateX(-1.5)
     this.wheel4.rotateX(Math.PI/2)
 
+    /*
     this.chassis = new Chassis(n_rows, n_columns, shader, textures.chassis, gl)
     this.chassis.translateY(-0.4)
     this.chassis.translateZ(-0.35)
     this.chassis.scaleX(3)
     this.chassis.scaleY(5)
     this.chassis.scaleZ(3)
+    */
   }
 }

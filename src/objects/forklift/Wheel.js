@@ -11,7 +11,8 @@ class Wheel extends Object3D {
 
   initialize3dComponents(n_rows, n_columns, shader, texture, gl) {
     let curve = this.buildCurve(n_rows)
-    let surface = new RevolutionSurface(curve, n_columns)
+    let texture_map = new WheelTextureMap(curve)
+    let surface = new RevolutionSurface(curve, n_columns, texture_map)
 
     this.renderable = new Renderable3D(shader, texture, gl, surface)
   }
@@ -31,4 +32,5 @@ class Wheel extends Object3D {
 
     return new Curve([s1, s2, s3, s4, s5])
   }
+
 }

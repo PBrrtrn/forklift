@@ -1,7 +1,7 @@
 class RevolutionSurface {
-  constructor(curve, n_slices) {
+  constructor(curve, n_slices, texture_map = new DefaultTextureMap()) {
     let curve_vertices = curve.getVertices()
-    let vertices = this.buildVertices(curve_vertices, n_slices)
+    let vertices = this.buildVertices(curve_vertices, n_slices, texture_map)
 
     this.vertex_positions = vertices.map((v) => v.position).flat()
     this.vertex_normals = vertices.map((v) => v.normal).flat()
@@ -26,12 +26,12 @@ class RevolutionSurface {
     return this.vertex_indices
   }
 
-  buildVertices(curve_vertices, n_slices) {
+  buildVertices(curve_vertices, n_slices, texture_map) {
     let vertices = []
 
     for (let i = 0; i <= n_slices; i++) {
       let phi = i * 2 * Math.PI/n_slices
-      let vertex_slice = this.getVertexSlice(phi, curve_vertices)
+      let vertex_slice = this.getVertexSlice(phi, curve_vertices, texture_map)
 
       vertices.push.apply(vertices, vertex_slice)
     }
@@ -54,7 +54,7 @@ class RevolutionSurface {
     return vertex_indices
   }
 
-  getVertexSlice(phi, curve_vertices) {
+  getVertexSlice(phi, curve_vertices, texture_map) {
     let vertex_slice = []
     for (let i = 0; i < curve_vertices.length; i++) {
       let curve_vertex = curve_vertices[i]
@@ -67,22 +67,19 @@ class RevolutionSurface {
       let normal_y = curve_vertex.normal[1]
       let normal_z = curve_vertex.normal[0]*Math.sin(phi)
 
-      let u = 0
-      let v = 0
-      debugger
-      if (i/curve_vertices.length < 0.5) {
-        u = 0.5 + Math.cos(phi) * i /curve_vertices.length
-        v = 0.5 + Math.sin(phi) * i /curve_vertices.length 
-      } else {
-        u = Math.cos(phi) * i /curve_vertices.length
-        v = Math.sin(phi) * i /curve_vertices.length
-        debugger
-      }
+      let curve_vertex_uv = texture_map.mapping[curve_vertex.position]
+
+      let u = texture_map.mapping[curve_vertex.position][0] - 0.5
+      let v = texture_map.mapping[curve_vertex.position][1] - 0.5
+
+      let swap = u
+      u = u * Math.cos(phi) - v * Math.sin(phi) + 0.5
+      v = swap * Math.sin(phi) + v * Math.cos(phi) + 0.5
 
       let vertex = {
         position: [pos_x, pos_y, pos_z],
         normal: [normal_x, normal_y, normal_z],
-        uv_coordinates: [u,v]
+        uv_coordinates: [u, v]
       }
 
       vertex_slice.push(vertex)

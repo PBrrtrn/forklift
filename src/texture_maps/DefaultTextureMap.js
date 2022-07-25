@@ -1,0 +1,4 @@
+class DefaultTextureMap {
+  constructor() {
+  }
+}

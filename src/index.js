@@ -131,7 +131,7 @@ function printSelected() {
 
   let rows = printer_settings.rows
   let columns = printer_settings.columns
-  let selected_texture = null // Asignar
+  let selected_texture = new ColorTexture(gl, [155, 0, 0, 255]) // Asignar
   switch (printer_settings.figure) {
     case 'A1':
       object = new RevolutionA1(rows, columns, shader, selected_texture, gl)

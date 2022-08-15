@@ -22,4 +22,8 @@ class WheelTextureMap {
     this.mapping[curve.segments[3].end_position] = [0.3, 0.5]
     this.mapping[curve.segments[4].end_position] = [0.5, 0.5]
   }
+
+  map_position(position) {
+    return this.mapping[position]
+  }
 }

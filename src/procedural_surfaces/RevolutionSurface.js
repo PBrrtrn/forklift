@@ -67,10 +67,10 @@ class RevolutionSurface {
       let normal_y = curve_vertex.normal[1]
       let normal_z = curve_vertex.normal[0]*Math.sin(phi)
 
-      let curve_vertex_uv = texture_map.mapping[curve_vertex.position]
+      let curve_vertex_uv = texture_map.map_position(curve_vertex.position)
 
-      let u = texture_map.mapping[curve_vertex.position][0] - 0.5
-      let v = texture_map.mapping[curve_vertex.position][1] - 0.5
+      let u = texture_map.map_position(curve_vertex.position)[0] - 0.5
+      let v = texture_map.map_position(curve_vertex.position)[1] - 0.5
 
       let swap = u
       u = u * Math.cos(phi) - v * Math.sin(phi) + 0.5

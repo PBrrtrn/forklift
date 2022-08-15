@@ -11,7 +11,7 @@ class SweepB2 extends Object3D {
     let curve = this.buildCurve(n_columns)
     let surface = new SweepSurface(curve, n_rows)
 
-    this.renderable = new Renderable3D(shader, gl, surface)
+    this.renderable = new Renderable3D(shader, texture, gl, surface)
   }
 
   buildCurve(n_columns) {

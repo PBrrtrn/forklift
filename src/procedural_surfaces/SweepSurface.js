@@ -46,23 +46,19 @@ class SweepSurface {
       let len = curve_vertices.length
 
       let bottom_vertex_pos = [0,0,0]
-      let top_vertex_pos = [0,0,0]
+      let top_vertex_pos = [0,1,0]
       for (let i = 0; i < len; i++) {
         bottom_vertex_pos[0] += vertices[i].position[0]
-        bottom_vertex_pos[1] += vertices[i].position[1]
         bottom_vertex_pos[2] += vertices[i].position[2]
 
-        top_vertex_pos[0] += vertices[vertices.length-1-i].position[0]
-        top_vertex_pos[1] += vertices[vertices.length-1-i].position[1]
-        top_vertex_pos[2] += vertices[vertices.length-1-i].position[2]
+        top_vertex_pos[0] += vertices[i].position[0]
+        top_vertex_pos[2] += vertices[i].position[2]
       }
 
       bottom_vertex_pos[0] = bottom_vertex_pos[0]/len
-      bottom_vertex_pos[1] = bottom_vertex_pos[1]/len
       bottom_vertex_pos[2] = bottom_vertex_pos[2]/len
 
       top_vertex_pos[0] = top_vertex_pos[0]/len
-      top_vertex_pos[1] = top_vertex_pos[1]/len
       top_vertex_pos[2] = top_vertex_pos[2]/len
 
       let bottom_vertex = {
@@ -87,7 +83,7 @@ class SweepSurface {
     let vertex_indices = []
 
     let n_columns = curve_vertices.length
-    for (let i = 0; i < n_rows+4; i++) {
+    for (let i = 0; i < n_rows; i++) {
       for (let j = 0; j < (n_columns); j++) {
         vertex_indices.push(i + j * n_columns)
         vertex_indices.push(i + j * n_columns + 1)

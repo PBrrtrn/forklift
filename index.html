@@ -71,34 +71,49 @@
       uniform mat4 projection_matrix;
       uniform mat4 normal_matrix;
 
-      varying vec3 vNormal;
       varying vec3 vPosWorld;
+      varying vec3 vNormal;
       varying vec2 vUvCoordinate;
 
       void main(void) {
         gl_Position = projection_matrix * view_matrix * model_matrix * vec4(aVertexPosition, 1.0);
 
-        vPosWorld = (model_matrix * vec4(aVertexPosition,1.0) ).xyz;    //la posicion en coordenadas de mundo
-        vNormal = (normal_matrix * vec4(aVertexNormal,1.0) ).xyz;       //la normal en coordenadas de mundo                 
+        vPosWorld = (model_matrix * vec4(aVertexPosition, 1.0) ).xyz;    //la posicion en coordenadas de mundo
+        vNormal = (model_matrix * vec4(aVertexNormal, 0.0) ).xyz;       //la normal en coordenadas de mundo                 
         vUvCoordinate = aVertexUvCoordinate;
       }
     </script>
 
     <script id="shader-fs" type="x-shader/x-fragment">
       precision highp float;
-      varying vec3 vNormal;
       varying vec3 vPosWorld;
+      varying vec3 vNormal;
       varying vec2 vUvCoordinate;
 
       uniform sampler2D texture_uniform;
 
+      /*
       void main(void) {
         vec3 lightVec = normalize(vec3(0.0,3.0,5.0) - vPosWorld);
         vec3 diffColor = mix(vec3(0.7,0.7,0.7), vNormal, 0.4);
         vec3 color = dot(lightVec, vNormal) * diffColor + vec3(0.2,0.2,0.2);
 
         gl_FragColor = vec4(color,1.0);
-        // gl_FragColor = texture2D(texture_uniform, vUvCoordinate);
+      }
+      */
+
+      void main(void) {
+        vec3 ambient_light_intensity = vec3(0.3, 0.3, 0.3);
+        vec3 directional_light_intensity = vec3(0.9, 0.9, 0.9);
+        vec3 directional_light_direction = normalize(vec3(1.0, -4.6, 0.0));
+
+        vec4 texel = texture2D(texture_uniform, vUvCoordinate);
+
+        vec3 light_intensity = ambient_light_intensity + 
+          directional_light_intensity * 
+          max(0.0, dot(vNormal, directional_light_direction));
+
+        gl_FragColor = vec4(texel.rgb * light_intensity, 1.0); 
       }
     </script>
 

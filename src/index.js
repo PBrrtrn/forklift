@@ -11,9 +11,6 @@ let canvas = null
 let current_camera = 1
 let cameras = {}
 
-let side_camera = null
-let rear_tracking_camera = null
-
 let shader = null
 
 let forklift = null

@@ -79,7 +79,7 @@
         gl_Position = projection_matrix * view_matrix * model_matrix * vec4(aVertexPosition, 1.0);
 
         vPosWorld = (model_matrix * vec4(aVertexPosition, 1.0) ).xyz;    //la posicion en coordenadas de mundo
-        vNormal = (model_matrix * vec4(aVertexNormal, 0.0) ).xyz;       //la normal en coordenadas de mundo                 
+        vNormal = aVertexNormal;                                         //la normal en coordenadas de mundo                 
         vUvCoordinate = aVertexUvCoordinate;
       }
     </script>

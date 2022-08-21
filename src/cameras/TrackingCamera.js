@@ -1,4 +1,4 @@
-class TrackingCamera {
+export default class TrackingCamera {
   constructor(distance, angle) {
     this.distance = distance
     this.angle = angle

@@ -1,4 +1,4 @@
-class OrbitalCamera {
+export default class OrbitalCamera {
   constructor(position, angle) {
     this.position = position
     this.angle = angle

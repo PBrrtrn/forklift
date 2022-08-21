@@ -63,7 +63,7 @@ function initShaders() {
   let vertex_shader_source = document.getElementById('shader-vs').innerHTML
   let fragments_shader_source = document.getElementById('shader-fs').innerHTML
 
-  shader = new ShaderProgram(vertex_shader_source, fragments_shader_source, gl)
+  shader = new ShaderProgram(gl, vertex_shader_source, fragments_shader_source)
 }
 
 /* Calls the constructor for every renderable object in the scene.
@@ -77,7 +77,7 @@ function initObjects() {
   cameras[5] = new TrackingCamera([0,0,-5], -Math.PI/2) // Rear tracking camera
   cameras[6] = new TrackingCamera([0,0,-10], Math.PI) // Side tracking camera
 
-  forklift_textures = {
+  let forklift_textures = {
     wheel: new ImageTexture(gl, 'resources/textures/wheel.jpg'),
     chassis: {
       body: new ColorTexture(gl, [144, 0, 0, 255]),
@@ -97,7 +97,7 @@ function initObjects() {
   forklift.scaleY(0.5)
   forklift.scaleZ(0.5)
 
-  shelf_textures = {
+  let shelf_textures = {
     beam: new ColorTexture(gl, [155, 0, 0, 255]),
     plank: new ColorTexture(gl, [155, 0, 0, 255])
   }
@@ -107,7 +107,7 @@ function initObjects() {
   shelf.translateX(-3)
   shelf.rotateY(Math.PI/2)
 
-  printer_textures = {
+  let printer_textures = {
     base: new ColorTexture(gl, [155, 0, 0, 255]),
     arm_stand: new ColorTexture(gl, [155, 0, 0, 255]),
     arm: {
@@ -153,7 +153,9 @@ function initGUI() {
   detail_folder.add(printer_settings, 'columns', 10, 60).name("Columns").step(1)
 
   var actions_folder = gui.addFolder('Actions')
-  actions_folder.add(window, 'printSelected').name("Print");
+  actions_folder.add({
+    printSelected: printSelected
+  }, 'printSelected').name("Print");
 
   figure_folder.open()
   detail_folder.open()
@@ -213,7 +215,7 @@ function tick() {
  bind all buffers and make a call to drawElements */
 function drawScene() {
   let view_matrix = cameras[current_camera].getViewMatrix(forklift.position, forklift.angle)
-  let model_matrix = mat4.create()
+  let model_matrix = glMatrix.mat4.create()
 
   forklift.draw(gl, model_matrix, view_matrix, projection_matrix)
   shelf.draw(gl, model_matrix, view_matrix, projection_matrix)

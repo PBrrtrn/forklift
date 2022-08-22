@@ -1,4 +1,12 @@
-class SweepB2 extends Object3D {
+import Renderable3D from './../../Renderable3D.js'
+import Object3D from './../Object3D.js'
+
+import Curve from './../../curves/Curve.js'
+import QuadraticBSpline from './../../curves/QuadraticBSpline.js'
+
+import SweepSurface from './../../procedural_surfaces/SweepSurface.js'
+
+export default class SweepB2 extends Object3D {
   draw(gl, parent_model_matrix, view_matrix, projection_matrix) {
     let model_matrix = this.modelMatrix(parent_model_matrix)
     let normal_matrix = this.normalMatrix(model_matrix, view_matrix)

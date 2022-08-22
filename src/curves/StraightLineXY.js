@@ -1,4 +1,4 @@
-class StraightLineXY {
+export default class StraightLineXY {
   constructor(start_position, end_position) {
     this.start_position = start_position
     this.end_position = end_position

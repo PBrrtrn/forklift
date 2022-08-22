@@ -1,7 +1,7 @@
-class ShaderProgram {
-  constructor(vertex_source, fragment_source, gl) {
-    let vertex_shader = this.makeShader(vertex_source, gl.VERTEX_SHADER)
-    let fragment_shader = this.makeShader(fragment_source, gl.FRAGMENT_SHADER)
+export default class ShaderProgram {
+  constructor(gl, vertex_source, fragment_source) {
+    let vertex_shader = this.makeShader(gl, vertex_source, gl.VERTEX_SHADER)
+    let fragment_shader = this.makeShader(gl, fragment_source, gl.FRAGMENT_SHADER)
 
     this.program = gl.createProgram()
 
@@ -47,7 +47,7 @@ class ShaderProgram {
     gl.vertexAttribPointer(vertex_uv_coordinate, 2, gl.FLOAT, false, 0, 0)
   }
 
-  makeShader(source, type) {
+  makeShader(gl, source, type) {
     let shader = gl.createShader(type)
     gl.shaderSource(shader, source)
     gl.compileShader(shader)

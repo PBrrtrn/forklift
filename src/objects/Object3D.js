@@ -1,4 +1,4 @@
-class Object3D {
+export default class Object3D {
   constructor(n_rows, n_columns, shader, textures, gl) {
     this.position = [0.0, 0.0, 0.0]
     this.angle = [0.0, 0.0, 0.0]
@@ -48,26 +48,26 @@ class Object3D {
   }
 
   modelMatrix(parent_model_matrix) {
-    let model_matrix = mat4.clone(parent_model_matrix)
+    let model_matrix = glMatrix.mat4.clone(parent_model_matrix)
 
-    mat4.translate(model_matrix, model_matrix, this.position)
+    glMatrix.mat4.translate(model_matrix, model_matrix, this.position)
 
-    mat4.rotateX(model_matrix, model_matrix, this.angle[0])
-    mat4.rotateY(model_matrix, model_matrix, this.angle[1])
-    mat4.rotateZ(model_matrix, model_matrix, this.angle[2])
+    glMatrix.mat4.rotateX(model_matrix, model_matrix, this.angle[0])
+    glMatrix.mat4.rotateY(model_matrix, model_matrix, this.angle[1])
+    glMatrix.mat4.rotateZ(model_matrix, model_matrix, this.angle[2])
 
-    mat4.scale(model_matrix, model_matrix, this.scale)
+    glMatrix.mat4.scale(model_matrix, model_matrix, this.scale)
 
     return model_matrix
   }
 
   normalMatrix(model_matrix, view_matrix) {
-    let normal_matrix = mat4.create()
+    let normal_matrix = glMatrix.mat4.create()
 
-    mat4.identity(normal_matrix)
-    mat4.multiply(normal_matrix, view_matrix, model_matrix)
-    mat4.invert(normal_matrix, normal_matrix)
-    mat4.transpose(normal_matrix, normal_matrix)
+    glMatrix.mat4.identity(normal_matrix)
+    glMatrix.mat4.multiply(normal_matrix, view_matrix, model_matrix)
+    glMatrix.mat4.invert(normal_matrix, normal_matrix)
+    glMatrix.mat4.transpose(normal_matrix, normal_matrix)
 
     return normal_matrix
   }

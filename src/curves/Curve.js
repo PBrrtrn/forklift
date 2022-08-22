@@ -1,4 +1,4 @@
-class Curve {
+export default class Curve {
   constructor(segments) {
     this.segments = segments
   }

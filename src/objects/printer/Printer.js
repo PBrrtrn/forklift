@@ -1,4 +1,10 @@
-class Printer extends Object3D {
+import Object3D from './../Object3D.js'
+
+import Wheel from './../forklift/Wheel.js'
+import Cuboid from './../Cuboid.js'
+import PrinterArm from './PrinterArm.js'
+
+export default class Printer extends Object3D {
   draw(gl, parent_model_matrix, view_matrix, projection_matrix) {
     let model_matrix = this.modelMatrix(parent_model_matrix)
 

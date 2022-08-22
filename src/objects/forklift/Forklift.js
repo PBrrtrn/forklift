@@ -1,4 +1,10 @@
-class Forklift extends Object3D {
+import Renderable3D from './../../Renderable3D.js'
+import Object3D from './../Object3D.js'
+
+import Wheel from './Wheel.js'
+import Chassis from './Chassis.js'
+
+export default class Forklift extends Object3D {
   draw(gl, parent_model_matrix, view_matrix, projection_matrix) {
     let model_matrix = this.modelMatrix(parent_model_matrix)
 

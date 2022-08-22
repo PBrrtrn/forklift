@@ -1,6 +1,15 @@
-const n_rows = 4
+import Renderable3D from './../../Renderable3D.js'
+import Object3D from './../Object3D.js'
 
-class Wheel extends Object3D {
+import Curve from './../../curves/Curve.js'
+import StraightLineXY from './../../curves/StraightLineXY.js'
+import QuadraticBSpline from './../../curves/QuadraticBSpline.js'
+
+import RevolutionSurface from './../../procedural_surfaces/RevolutionSurface.js'
+
+import WheelTextureMap from './../../texture_maps/WheelTextureMap.js'
+
+export default class Wheel extends Object3D {
   draw(gl, parent_model_matrix, view_matrix, projection_matrix) {
     let model_matrix = this.modelMatrix(parent_model_matrix)
     let normal_matrix = this.normalMatrix(model_matrix, view_matrix)

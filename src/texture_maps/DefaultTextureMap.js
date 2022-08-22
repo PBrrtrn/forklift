@@ -1,4 +1,4 @@
-class DefaultTextureMap {
+export default class DefaultTextureMap {
   constructor() {
   }
 

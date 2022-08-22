@@ -1,4 +1,8 @@
-class Shelf extends Object3D {
+import Object3D from './Object3D.js'
+
+import Cuboid from './Cuboid.js'
+
+export default class Shelf extends Object3D {
   draw(gl, parent_model_matrix, view_matrix, projection_matrix) {
     let model_matrix = this.modelMatrix(parent_model_matrix)
 

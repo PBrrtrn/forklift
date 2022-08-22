@@ -1,4 +1,4 @@
-class SweepSurface {
+export default class SweepSurface {
   constructor(curve, n_rows, lids=false) {
     let curve_vertices = curve.getVertices()
     let vertices = this.buildVertices(curve_vertices, n_rows, lids) 

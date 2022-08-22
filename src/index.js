@@ -77,8 +77,6 @@ function setupWebGL() {
 }
 
 async function initShaders() {
-  // let vertex_shader_source = document.getElementById('shader-vs').innerHTML
-  // let fragments_shader_source = document.getElementById('shader-fs').innerHTML
   let vs_text = await loadTextFile('/resources/shaders/static_vs.glsl')
   let fs_text = await loadTextFile('/resources/shaders/static_fs.glsl')
 

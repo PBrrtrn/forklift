@@ -1,6 +1,18 @@
 import OrbitalCamera from './cameras/OrbitalCamera.js'
 import TrackingCamera from './cameras/TrackingCamera.js'
 
+import ImageTexture from './ImageTexture.js'
+import ColorTexture from './ColorTexture.js'
+
+import ShaderProgram from './ShaderProgram.js'
+
+import Forklift from './objects/forklift/Forklift.js'
+import Shelf from './objects/Shelf.js'
+import Printer from './objects/printer/Printer.js'
+
+import RevolutionA1 from './objects/printer_objects/RevolutionA1.js'
+import SweepB2 from './objects/printer_objects/SweepB2.js'
+
 const fov = 45
 const near = 0.1
 const far = 100.0

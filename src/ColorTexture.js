@@ -1,4 +1,4 @@
-class ColorTexture {
+export default class ColorTexture {
   constructor(gl, color_array) {
     this.texture = gl.createTexture()
     gl.bindTexture(gl.TEXTURE_2D, this.texture)     

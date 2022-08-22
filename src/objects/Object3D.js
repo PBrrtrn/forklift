@@ -1,4 +1,4 @@
-class Object3D {
+export default class Object3D {
   constructor(n_rows, n_columns, shader, textures, gl) {
     this.position = [0.0, 0.0, 0.0]
     this.angle = [0.0, 0.0, 0.0]

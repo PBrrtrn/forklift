@@ -1,4 +1,4 @@
-class WheelTextureMap {
+export default class WheelTextureMap {
   constructor(curve) {
     this.mapping = {}
 

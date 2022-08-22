@@ -1,4 +1,4 @@
-class BSpline {
+export default class BSpline {
 
   constructor(step_size, control_points) {
     this.step_size = step_size

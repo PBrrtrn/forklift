@@ -1,4 +1,13 @@
-class RevolutionA1 extends Object3D {
+import Renderable3D from './../../Renderable3D.js'
+import Object3D from './../Object3D.js'
+
+import Curve from './../../curves/Curve.js'
+import StraightLineXY from './../../curves/StraightLineXY.js'
+import QuadraticBSpline from './../../curves/QuadraticBSpline.js'
+
+import RevolutionSurface from './../../procedural_surfaces/RevolutionSurface.js'
+
+export default class RevolutionA1 extends Object3D {
   draw(gl, parent_model_matrix, view_matrix, projection_matrix) {
     let model_matrix = this.modelMatrix(parent_model_matrix)
     let normal_matrix = this.normalMatrix(model_matrix, view_matrix)

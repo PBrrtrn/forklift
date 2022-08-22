@@ -1,4 +1,6 @@
-class RevolutionSurface {
+import DefaultTextureMap from '../texture_maps/DefaultTextureMap.js'
+
+export default class RevolutionSurface {
   constructor(curve, n_slices, texture_map = new DefaultTextureMap()) {
     let curve_vertices = curve.getVertices()
     let vertices = this.buildVertices(curve_vertices, n_slices, texture_map)

@@ -1,4 +1,4 @@
-class ImageTexture {
+export default class ImageTexture {
   constructor(gl, path) {
     let self = this
     self.texture = gl.createTexture()

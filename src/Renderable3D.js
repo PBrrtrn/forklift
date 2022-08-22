@@ -1,4 +1,4 @@
-class Renderable3D {
+export default class Renderable3D {
   constructor(shader, texture, gl, surface) {
     this.shader = shader
     this.texture = texture

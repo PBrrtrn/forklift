@@ -1,4 +1,6 @@
-class QuadraticBSpline extends BSpline {
+import BSpline from './BSpline.js'
+
+export default class QuadraticBSpline extends BSpline {
   getPoint(u) {
     let segment = (u < 1) ? Math.floor(u * (this.segments + 1)) : this.segments
     let local_u = u * (this.segments + 1) - segment

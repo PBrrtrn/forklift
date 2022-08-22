@@ -75,8 +75,8 @@ function setupWebGL() {
 }
 
 function initShaders() {
-  let vertex_shader_source = document.getElementById('shader-vs').innerHTML
-  let fragments_shader_source = document.getElementById('shader-fs').innerHTML
+  // let vertex_shader_source = document.getElementById('shader-vs').innerHTML
+  // let fragments_shader_source = document.getElementById('shader-fs').innerHTML
 
   shader = new ShaderProgram(gl, vertex_shader_source, fragments_shader_source)
 }

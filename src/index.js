@@ -13,6 +13,8 @@ import Printer from './objects/printer/Printer.js'
 import RevolutionA1 from './objects/printer_objects/RevolutionA1.js'
 import SweepB2 from './objects/printer_objects/SweepB2.js'
 
+import {loadTextFile} from './utils/files.js'
+
 const fov = 45
 const near = 0.1
 const far = 100.0
@@ -40,7 +42,7 @@ let printer_settings = {
   figure: 'A1'
 }
 
-function run() {
+async function run() {
   canvas = document.getElementById("my-canvas")
 
   document.addEventListener("keydown", handleInput)
@@ -53,7 +55,7 @@ function run() {
 
   if (gl) {
     setupWebGL()
-    initShaders()
+    await initShaders()
     initObjects()
     initGUI()
     tick()
@@ -74,11 +76,13 @@ function setupWebGL() {
   mat4.perspective(projection_matrix, fov, aspect_ratio, near, far)
 }
 
-function initShaders() {
-  let vertex_shader_source = document.getElementById('shader-vs').innerHTML
-  let fragments_shader_source = document.getElementById('shader-fs').innerHTML
+async function initShaders() {
+  // let vertex_shader_source = document.getElementById('shader-vs').innerHTML
+  // let fragments_shader_source = document.getElementById('shader-fs').innerHTML
+  let vs_text = await loadTextFile('/resources/shaders/static_vs.glsl')
+  let fs_text = await loadTextFile('/resources/shaders/static_fs.glsl')
 
-  shader = new ShaderProgram(gl, vertex_shader_source, fragments_shader_source)
+  shader = new ShaderProgram(gl, vs_text, fs_text)
 }
 
 /* Calls the constructor for every renderable object in the scene.

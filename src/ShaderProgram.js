@@ -1,6 +1,5 @@
 export default class ShaderProgram {
   constructor(gl, vertex_source, fragment_source) {
-    debugger
     let vertex_shader = this.makeShader(gl, vertex_source, gl.VERTEX_SHADER)
     let fragment_shader = this.makeShader(gl, fragment_source, gl.FRAGMENT_SHADER)
 

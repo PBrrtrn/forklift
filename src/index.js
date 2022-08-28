@@ -77,8 +77,8 @@ function setupWebGL() {
 }
 
 async function initShaders() {
-  let vs_text = await loadTextFile('/resources/shaders/static_vs.glsl')
-  let fs_text = await loadTextFile('/resources/shaders/static_fs.glsl')
+  let vs_text = await loadTextFile('/resources/shaders/no_shadow_vs.glsl')
+  let fs_text = await loadTextFile('/resources/shaders/no_shadow_fs.glsl')
 
   shader = new ShaderProgram(gl, vs_text, fs_text)
 }

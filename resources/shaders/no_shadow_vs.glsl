@@ -15,8 +15,8 @@ varying vec2 fragmentUvCoordinate;
 
 void main() {
   fragmentPosition = (model_matrix * vec4(vertexPosition, 1.0)).xyz;
-  fragmentNormal = vertexNormal;
-  fragmentUvCoordinate = vertexNormal;
+  fragmentNormal = (normal_matrix * vec4(vertexNormal, 0.0)).xyz;
+  fragmentUvCoordinate = vertexUvCoordinate;
 
   gl_Position = projection_matrix * view_matrix * vec4(fragmentPosition, 1.0);
 }

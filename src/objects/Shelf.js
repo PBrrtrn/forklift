@@ -28,7 +28,7 @@ export default class Shelf extends Object3D {
 
   initialize3dComponents(n_rows, n_columns, shader, textures, gl) {
     this.beam = new Cuboid(n_rows, n_columns, shader, textures.beam, gl)
-    this.beam.scaleY(10)
+    this.beam.scaleY(4.45)
     this.beam.scaleX(0.02)
     this.beam.scaleZ(0.02)
 

@@ -29,31 +29,6 @@ export default class SweepSurface {
   buildVertices(curve_vertices, n_rows, lids) {
     let vertices = []
 
-    if (lids) {
-      let bottom_lid = []
-
-      let lid_center_vertex_position = [0,0,0]
-      for (let vertex of curve_vertices) {
-        let lid_vertex = {
-          position: vertex.position,
-          normal: [0,-1,0] // TODO: Incluir coordenada UV
-        }
-        bottom_lid.push(lid_vertex)
-        lid_center_vertex_position[0] += vertex.position[0]
-        lid_center_vertex_position[2] += vertex.position[2]
-      }
-      lid_center_vertex_position[0] = lid_center_vertex_position[0] / curve_vertices.length
-      lid_center_vertex_position[2] = lid_center_vertex_position[2] / curve_vertices.length
-
-      let lid_center_vertex = {
-        position: lid_center_vertex_position,
-        normal: [0,-1,0]
-      }
-
-      bottom_lid.unshift(lid_center_vertex)
-      vertices.push.apply(vertices, bottom_lid)
-    }
-
     for (let i = 0; i <= n_rows; i++) {
       let y = i/n_rows
       for (let vertex of curve_vertices) {
@@ -65,28 +40,43 @@ export default class SweepSurface {
     }
 
     if (lids) {
+      let bottom_lid = []
       let top_lid = []
 
       let lid_center_vertex_position = [0,0,0]
       for (let vertex of curve_vertices) {
-        let lid_vertex = {
-          position: [vertex.position[0], 1, vertex.position[2]],
-          normal: [0,1,0] // TODO: Incluir coordenada UV
+        let bottom_lid_vertex = {
+          position: vertex.position,
+          normal: [0,-1,0] // TODO: Incluir coordenada UV
         }
-        top_lid.push(lid_vertex)
+
+        let top_lid_vertex = {
+          position: [vertex.position[0], 1, vertex.position[2]],
+          normal: [0,1,0]
+        }
+
+        bottom_lid.push(bottom_lid_vertex)
+        top_lid.push(top_lid_vertex)
+
         lid_center_vertex_position[0] += vertex.position[0]
         lid_center_vertex_position[2] += vertex.position[2]
       }
       lid_center_vertex_position[0] = lid_center_vertex_position[0] / curve_vertices.length
       lid_center_vertex_position[2] = lid_center_vertex_position[2] / curve_vertices.length
 
-      let lid_center_vertex = {
-        position: lid_center_vertex_position,
-        normal: [0,1,0]
+      let bottom_lid_center_vertex = {
+        position: [lid_center_vertex_position[0], 0, lid_center_vertex_position[2]],
+        normal: [0,-1,0]
       }
 
-      top_lid.push(lid_center_vertex)
-      vertices.push.apply(vertices, top_lid)
+      let top_lid_center_vertex = {
+        position: [lid_center_vertex_position[0], 1, lid_center_vertex_position[2]],
+        normal: [0,1,0]
+      }
+      bottom_lid.unshift(bottom_lid_center_vertex)
+      top_lid.push(top_lid_center_vertex)
+
+      vertices = bottom_lid.concat(vertices).concat(top_lid)
     }
 
     return vertices
@@ -94,15 +84,6 @@ export default class SweepSurface {
 
   buildVertexIndices(curve_vertices, n_rows, lids) {
     let indices = []
-
-    if (lids) {
-      for (let i = 1; i <= curve_vertices.length; i++) {
-        indices.push(0)
-        indices.push(i)
-      }
-    }
-
-    let vertices = this.buildVertices(curve_vertices, n_rows, lids)
 
     let n_vertices = curve_vertices.length
     let start = (lids ? n_vertices + 1 : 0)
@@ -114,14 +95,25 @@ export default class SweepSurface {
     }
 
     if (lids) {
-      let total_vertices = curve_vertices.length * (n_rows + 1) + (curve_vertices.length + 1) * 2
-      let start = total_vertices - curve_vertices.length - 1
-      indices.push(total_vertices - 1)
-      indices.push(total_vertices - 1)
-      for (let i = start; i < total_vertices; i++) {
-        indices.push(i)
-        indices.push(total_vertices - 1)
+      let bottom_lid_indices = []
+      for (let i = 1; i <= n_vertices; i++) {
+        bottom_lid_indices.push(0)
+        bottom_lid_indices.push(i)
       }
+
+      let top_lid_indices = []
+      let total_vertices = curve_vertices.length * (n_rows + 1) + (curve_vertices.length + 1) * 2
+      let top_lid_start_index = total_vertices - curve_vertices.length - 1
+
+      top_lid_indices.push(total_vertices - 1)
+      top_lid_indices.push(total_vertices - 1)
+
+      for (let i = top_lid_start_index; i < total_vertices; i++) {
+        top_lid_indices.push(i)
+        top_lid_indices.push(total_vertices - 1)
+      }
+
+      indices = bottom_lid_indices.concat(indices).concat(top_lid_indices)
     }
 
     return indices

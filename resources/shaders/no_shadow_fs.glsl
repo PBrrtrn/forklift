@@ -22,5 +22,4 @@ void main() {
   vec4 texel = texture2D(texture_uniform, fragmentUvCoordinate);
 
   gl_FragColor = vec4(texel.rgb * lightIntensity, 1.0);
-
 }

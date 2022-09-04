@@ -48,7 +48,7 @@ export default class Printer extends Object3D {
     this.arm_stand.translateY(-0.25)
     this.arm_stand.translateX(0.7)
     this.arm_stand.scaleX(0.025)
-    this.arm_stand.scaleY(2.5)
+    this.arm_stand.scaleY(1.5)
     this.arm_stand.scaleZ(0.025)
 
     this.printer_arm = new PrinterArm(n_rows, n_columns, shader, textures.arm, gl)

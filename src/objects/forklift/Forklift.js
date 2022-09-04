@@ -78,10 +78,11 @@ export default class Forklift extends Object3D {
     this.wheel4.rotateX(Math.PI/2)
 
     this.chassis = new Chassis(n_rows, n_columns, shader, textures.chassis, gl)
-    this.chassis.translateY(-0.4)
-    this.chassis.translateZ(-0.35)
+    this.chassis.translateY(0.4)
+    this.chassis.translateZ(-1.6)
+    this.chassis.rotateX(Math.PI/2)
     this.chassis.scaleX(3)
-    this.chassis.scaleY(5)
-    this.chassis.scaleZ(3)
+    this.chassis.scaleY(2.5)
+    this.chassis.scaleZ(2.5)
   }
 }

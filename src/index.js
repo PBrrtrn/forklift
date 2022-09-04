@@ -110,6 +110,7 @@ function initObjects() {
 
   forklift = new Forklift(60, 60, shader, forklift_textures, gl)
   forklift.translateY(0.3)
+
   forklift.scaleX(0.5)
   forklift.scaleY(0.5)
   forklift.scaleZ(0.5)
